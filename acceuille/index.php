@@ -45,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
     $joueur = $stmt->fetch();
 
 }
+
+// Récupération des univers
+$stmt = $pdo->query('SELECT nom FROM univers');
+
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +77,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
                 <br>
                 <input type="password" placeholder="Mot de passe" name="password" required>
                 <br>
+                <select name="univers">
+                <?php
+                // Affichage des univers dans un menu déroulant
+                while ($univers = $stmt->fetch()) {
+                    echo '<option>' . $univers['nom'] . '</option>';
+                }
+                ?>
+                </select>
+                <br>
                 <input type="submit" value="Se connecter">
+                <br>
+
+
             </form>
         </div>
         <div id="div_creation">
