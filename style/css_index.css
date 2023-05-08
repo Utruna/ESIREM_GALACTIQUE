@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+}
+
+video#background-video {
+    position: fixed; right: 0; bottom: 0;
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto; z-index: -100;
+    background: "img/video_image.PNG" no-repeat;
+    background-size: cover;
+}
+
+#global{
+    overflow: auto;
+}
+
+#div_inscription{
+    float:left;
+    width: 20%;
+    margin-left: 15%;
+    margin-top: 10%;
+}
+
+#div_creation{
+    overflow: auto;
+    margin-left: 60%;
+    margin-right: 15%;
+    margin-top: 10%;
+}
+
+h1{
+    padding-bottom: 10px;
+    color: white;
+}
+
+form {
+    padding: 30px;
+    border: 1px solid #f1f1f1;
+    background: #ffffffd5;
+    /*box-shadow: 0 0 50px 0 rgb(126, 126, 126), 0 5px 5px 0 rgb(85, 85, 85);*/
+}
+
+input[type=text], input[type=password], input[type="email"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.815);
+}
+input[type=submit] {
+    background-color: #444e74d2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    width: 100%;
+}
