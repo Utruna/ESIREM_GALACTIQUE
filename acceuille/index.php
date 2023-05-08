@@ -10,28 +10,29 @@ catch (PDOException $e) {
     echo "merci de faire /install.php pour installer la base de donnée";
     }
 
+if(isset($_POST['connection'])) {
 // Vérification si le formulaire a été soumis
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des données du formulaire
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Récupération des données du formulaire
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-    // Vérification si l'email existe dans la base de données
-    $stmt = $pdo->prepare('SELECT * FROM joueur WHERE email = :email');
-    $stmt->execute(['email' => $email]);
-    $joueur = $stmt->fetch();
+        // Vérification si l'email existe dans la base de données
+        $stmt = $pdo->prepare('SELECT * FROM joueur WHERE email = :email');
+        $stmt->execute(['email' => $email]);
+        $joueur = $stmt->fetch();
 
-    if ($joueur && $password == $joueur['password']) {
-        // Le joueur a été trouvé et le mot de passe est correct
-        $_SESSION['idJoueur'] = $joueur['idJoueur'];
-        header('Location: hub.php');
-        exit();
-    } else {
-        // Le joueur n'a pas été trouvé ou le mot de passe est incorrect
-        $error = 'Email ou mot de passe incorrect';
+        if ($joueur && $password == $joueur['password']) {
+            // Le joueur a été trouvé et le mot de passe est correct
+            $_SESSION['idJoueur'] = $joueur['idJoueur'];
+            header('Location:../galaxie/galaxi.php');
+            exit();
+        } else {
+            // Le joueur n'a pas été trouvé ou le mot de passe est incorrect
+            $error = 'Email ou mot de passe incorrect';
+        }
     }
 }
-
 // Vérification si le formulaire de création de compte a été soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['nom'])) {
     // Récupération des données du formulaire de création de compte
@@ -49,6 +50,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
 // Récupération des univers
 $stmt = $pdo->query('SELECT nom FROM univers');
 
+if(isset($_POST['create_universe'])) {
+
+    // Création de l'univers
+    $pdo->exec('INSERT INTO univers (nom) VALUES ("beta")');
+    $universeId = $pdo->lastInsertId();
+
+        // Création des 5 galaxies de l'univers
+        for ($i = 1; $i <= 5; $i++) {
+            $pdo->exec('INSERT INTO galaxie (idUnivers, nom, numero) VALUES ('.$universeId.', "Galaxie '.$i.'", '.$i.')');
+            $galaxyId = $pdo->lastInsertId();
+
+            // Création des 10 systèmes solaires de la galaxie
+            for ($j = 1; $j <= 10; $j++) {
+                $systemeNom = "Système solaire ".$j." de la Galaxie ".$i; 
+                $systemeNumero = $j;   
+                $pdo->exec('INSERT INTO systeme_solaire (idGalaxie, nom, numero) VALUES ('.$galaxyId.', "'.$systemeNom.'", '.$systemeNumero.')');
+                $systemId = $pdo->lastInsertId();
+                
+                    // Création des planètes
+                    $positions = range(1, 10); // Créé un tableau de 1 à 10
+                    shuffle($positions); // Mélange les positions
+                    $nbPlanetes = rand(4, 10); // Génère un nombre aléatoire entre 4 et 10 pour le nombre de planètes
+                    for ($k = 0; $k < $nbPlanetes; $k++) {
+                        $position = $positions[$k]; // Récupère une position aléatoire dans le tableau des positions
+                        $idType = rand(1, 3); // Génère un nombre aléatoire entre 1 et 3 pour le type de planète
+                        $pdo->exec('INSERT INTO planete (idSysteme, position, nom, idType, idJoueur) VALUES ('.$systemId.', '.$position.', "Planète '.$position.'", '.$idType.', 0)');
+                    }
+                }
+            }
+        }        
 ?>
 
 <!DOCTYPE html>
@@ -86,10 +117,10 @@ $stmt = $pdo->query('SELECT nom FROM univers');
                 ?>
                 </select>
                 <br>
-                <input type="submit" value="Se connecter">
+                <input type="submit" name="create_universe" value="Créer un univers">
                 <br>
-
-
+                <input type="submit" name="connection" value="Se connecter">
+                <br>
             </form>
         </div>
         <div id="div_creation">
@@ -105,5 +136,6 @@ $stmt = $pdo->query('SELECT nom FROM univers');
             </form>
         </div>
     </div>
+
 </body>
 </html>
