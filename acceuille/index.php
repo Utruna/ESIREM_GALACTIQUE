@@ -53,16 +53,6 @@ if (isset($_POST['creation_universe'])) {
 					// Affichage des univers dans un menu déroulant
 					while ($univers = $selectuniers->fetch()) {
 						echo '<option value="' . $univers['id'] . '">' . $univers['nom'] . '</option>';
-						// On stocke le nom et l'id de l'univers dans des variables de session
-						// En cas de changement de l'univers selectionné, on pourra récupéré les informations acutalisées
-						if (!isset($_SESSION['nomUnivers'])) {
-							$_SESSION['nomUnivers'] = $univers['nom'];
-						}
-						if (!isset($_SESSION['idUnivers'])) {
-							$_SESSION['idUnivers'] = $univers['id'];
-							var_dump($_SESSION['idUnivers']);
-						}
-						
 					}
 					?>
 				</select>
@@ -74,7 +64,6 @@ if (isset($_POST['creation_universe'])) {
 					echo '<p style="color:red">Email ou mot de passe incorrect</p>';
 					unset($_SESSION['error']);
 				}
-
 				?>
 			</form>
 			<div id="div_creation">
@@ -89,10 +78,9 @@ if (isset($_POST['creation_universe'])) {
 					<button>Crée son compte</button>
 				</form>
 			</div>
-
 			<div id="creation_univers" method="post">
 				<form method="post" action="./../univers/create_universe.php">
-				<input type="submit" name="create_universe" value="Créer un univers">
+					<input type="submit" name="create_universe" value="Créer un univers">
 			</div>
 		</div>
 
