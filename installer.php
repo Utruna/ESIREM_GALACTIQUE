@@ -27,7 +27,7 @@ try {
   $pdo->exec('
   CREATE TABLE univers (
     id INT NOT NULL AUTO_INCREMENT,
-    nom VARCHAR(255) NOT NULL,
+    nom VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
   );
 ');
@@ -60,6 +60,7 @@ $pdo->exec('
     idSysteme INT NOT NULL,
     position INT NOT NULL,
     nom VARCHAR(255) NOT NULL,
+    pseudo VARCHAR(255) NOT NULL DEFAULT "Planète sans nom",
     idType INT NOT NULL,
     idJoueur INT NOT NULL,
     PRIMARY KEY (id),
@@ -367,6 +368,10 @@ CREATE TABLE bouclier (
   PRIMARY KEY (id)
 );
 ');
+
+$pdo->exec('INSERT INTO type_planete (type) VALUES ("Type 1"), ("Type 2"), ("Type 3")');
+
+
 
 }
     catch (PDOException $e) {
