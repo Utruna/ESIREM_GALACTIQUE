@@ -371,10 +371,36 @@ CREATE TABLE bouclier (
 
 $pdo->exec('INSERT INTO type_planete (type) VALUES ("Type 1"), ("Type 2"), ("Type 3")');
 
+$pdo->exec('
+INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmentationParNiveau) VALUES
+    (\'RECHERCHE ENERGIE\', 0, 0, 100, 2),
+    (\'RECHERCHE LASER\', 0, 0, 300, 0),
+    (\'RECHERCHE IONS\', 0, 0, 500, 0),
+    (\'RECHERCHE BOUCLIER\', 0, 0, 1000, 5),
+    (\'ARMEMENT\', 500, 0, 200, 3),
+    (\'CHASSEUR\', 3000, 0, 500, 0),
+    (\'CROISEUR\', 20000, 0, 5000, 0),
+    (\'TRANSPORTEUR\', 6000, 0, 1500, 0),
+    (\'VAISSEAU DE COLONISATION\', 10000, 0, 10000, 0),
+    (\'LABORATOIRE DE RECHERCHE\', 1000, 500, 0, 0),
+    (\'CHANTIER SPATIAL\', 500, 500, 0, 0),
+    (\'USINE DE NANITES\', 10000, 5000, 0, 0),
+    (\'MINE DE METAL\', 100, 10, 0, 0),
+    (\'SYNTHETISEUR DE DEUTERIUM\', 200, 50, 0, 0),
+    (\'CENTRALE SOLAIRE\', 150, 0, 20, 0),
+    (\'CENTRALE A FUSION\', 5000, 2000, 0, 0);'
+);
+
+$pdo->exec('
+INSERT INTO `type_vaisseau` (`nom`) VALUES
+(`Chasseur`),
+(`Croiseur`),
+(`Transporteur`),
+(`Coloniseur`);
+;');
 
 
 }
     catch (PDOException $e) {
         echo 'Connexion échouée : ' . $e->getMessage();
     }
-?>

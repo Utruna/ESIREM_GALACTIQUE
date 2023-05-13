@@ -80,8 +80,12 @@ if (isset($_POST['creation_universe'])) {
 			</div>
 			<div id="creation_univers" method="post">
 				<form method="post" action="./../univers/create_universe.php">
+					<label for="nom_univers">Nom de l'univers :</label>
+					<input type="text" name="nom_univers" id="nom_univers" required>
 					<input type="submit" name="create_universe" value="Créer un univers">
+				</form>
 			</div>
+
 		</div>
 
 </body>

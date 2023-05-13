@@ -18,7 +18,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 
 		if ($joueur && $password == $joueur['password']) {
 			// Le joueur a été trouvé et le mot de passe est correct
-			$_SESSION['idJoueur'] = $joueur['idJoueur'];
+			$_SESSION['idJoueur'] = $joueur['id'];
 			header('Location:../galaxie/galaxie.php');
 			exit();
 		} else {
