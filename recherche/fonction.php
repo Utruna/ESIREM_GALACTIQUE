@@ -45,7 +45,7 @@ function checkIonsResearch($idJoueur) {
                 WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'ions' AND niveau = 0)
                 AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
     // Vérification des recherches pour les ions
-    $count = countResearch($pdo, $query, $idJoueur);
+    $count = countResearch($query, $idJoueur);
     // Si le résultat count est égal à 0, cela signifie que le joueur possède toutes les recherches requises pour obtenir les ions.
     if ($count == 0) {
         echo "Le joueur possède les recherches nécessaires pour obtenir les ions.";
@@ -64,7 +64,7 @@ function checkLaserResearch($idJoueur) {
                 WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'laser' AND niveau = 0)
                 AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
 
-    $count = countResearch($pdo, $query, $idJoueur);
+    $count = countResearch($query, $idJoueur);
 
     if ($count == 0) {
         echo "Le joueur possède les recherches nécessaires pour obtenir le laser.";
