@@ -322,9 +322,20 @@ CREATE TABLE rapport_de_combat (
 CREATE TABLE infrastructure (
   id INT NOT NULL AUTO_INCREMENT,
   idPlanete INT NOT NULL,
-  niveauMinier INT NOT NULL,
-  chantierSpatial INT NOT NULL,
-  LaboratoireRecherche INT NOT NULL,
+  niveauLabo INT NOT NULL,
+  niveauChantierSpatial INT NOT NULL,
+  niveauUsineNanite INT NOT NULL,
+  niveauUsineMetal INT NOT NULL,
+  niveauCentraleSolaire INT NOT NULL,
+  niveauCentraleFusion INT NOT NULL,
+  niveauArtillerieLaser INT NOT NULL,
+  niveauCannonIons INT NOT NULL,
+  niveauBouclier INT NOT NULL,
+  niveauTechEnergie INT NOT NULL,
+  niveauTechLaser INT NOT NULL,
+  niveauTechIons INT NOT NULL,
+  niveauTechBouclier INT NOT NULL,
+  niveauTechArmement INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
@@ -371,26 +382,26 @@ CREATE TABLE bouclier (
 
   $pdo->exec('INSERT INTO type_planete (type) VALUES ("Type 1"), ("Type 2"), ("Type 3")');
 
-  $pdo->exec(
-    '
+  $pdo->exec('
 INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmentationParNiveau) VALUES
-    (\'RECHERCHE ENERGIE\', 0, 0, 100, 2),
-    (\'RECHERCHE LASER\', 0, 0, 300, 0),
-    (\'RECHERCHE IONS\', 0, 0, 500, 0),
-    (\'RECHERCHE BOUCLIER\', 0, 0, 1000, 5),
-    (\'ARMEMENT\', 500, 0, 200, 3),
-    (\'CHASSEUR\', 3000, 0, 500, 0),
-    (\'CROISEUR\', 20000, 0, 5000, 0),
-    (\'TRANSPORTEUR\', 6000, 0, 1500, 0),
-    (\'VAISSEAU DE COLONISATION\', 10000, 0, 10000, 0),
-    (\'LABORATOIRE DE RECHERCHE\', 1000, 500, 0, 0),
-    (\'CHANTIER SPATIAL\', 500, 500, 0, 0),
-    (\'USINE DE NANITES\', 10000, 5000, 0, 0),
-    (\'MINE DE METAL\', 100, 10, 0, 0),
-    (\'SYNTHETISEUR DE DEUTERIUM\', 200, 50, 0, 0),
-    (\'CENTRALE SOLAIRE\', 150, 0, 20, 0),
-    (\'CENTRALE A FUSION\', 5000, 2000, 0, 0);'
-  );
+  (\'recherche_energie\', 0, 0, 100, 2),
+  (\'recherche_laser\', 0, 0, 300, 0),
+  (\'recherche_ions\', 0, 0, 500, 0),
+  (\'recherche_bouclier\', 0, 0, 1000, 5),
+  (\'armement\', 500, 0, 200, 3),
+  (\'chasseur\', 3000, 0, 500, 0),
+  (\'croiseur\', 20000, 0, 5000, 0),
+  (\'transporteur\', 6000, 0, 1500, 0),
+  (\'vaisseau_de_colonisation\', 10000, 0, 10000, 0),
+  (\'laboratoire_de_recherche\', 1000, 500, 0, 0),
+  (\'chantier_spatial\', 500, 500, 0, 0),
+  (\'usine_de_nanites\', 10000, 5000, 0, 0),
+  (\'mine_de_metal\', 100, 10, 0, 0),
+  (\'synthetiseur_de_deuterium\', 200, 50, 0, 0),
+  (\'centrale_solaire\', 150, 0, 20, 0),
+  (\'centrale_a_fusion\', 5000, 2000, 0, 0);
+');
+
 
   $pdo->exec('
 INSERT INTO `type_vaisseau` (`nom`) VALUES
@@ -460,11 +471,37 @@ INSERT INTO `type_vaisseau` (`nom`) VALUES
     "
   );
 
-  $pdo->exec('
-INSERT INTO contrainte_recherche VALUES (idRecherche, idRecherchesouhaiter)
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'laser' AND r1.niveau = 5
+AND r2.typeRecherche = 'ions' AND r2.niveau = 0;
+");
 
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'energie' AND r1.niveau = 5
+AND r2.typeRecherche = 'laser' AND r2.niveau = 0;
+");
 
-');
+  $pdo->exec("
+  INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+  SELECT r1.id, r2.id
+  FROM recherche r1, recherche r2
+  WHERE r1.typeRecherche = 'energie' AND r1.niveau = 8
+  AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
+");
+
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'ions' AND r1.niveau = 2
+AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
+");
 } catch (PDOException $e) {
   echo 'Connexion échouée : ' . $e->getMessage();
 }

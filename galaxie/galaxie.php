@@ -92,6 +92,12 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                             <td>
                                 <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
                             </td>
+                            <td>
+                                <form action="./../recherche/recherche.php" method="post">
+                                    <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                    <button type="submit">Rechercher</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
