@@ -38,7 +38,7 @@ if(isset($_POST['create_universe'])) {
                 for ($k = 0; $k < $nbPlanetes; $k++) {
                     $position = $positions[$k]; // Récupère une position aléatoire dans le tableau des positions
                     $idType = rand(1, 3); // Génère un nombre aléatoire entre 1 et 3 pour le type de planète
-                    $pdo->exec('INSERT INTO planete (idSysteme, position, nom, idType, idJoueur) VALUES ('.$systemId.', '.$position.', "Planète '.$position.'", '.$idType.', 0)');
+                    $pdo->exec('INSERT INTO planete (idSystemeSolaire, position, nom, idType, idJoueur) VALUES ('.$systemId.', '.$position.', "Planète '.$position.'", '.$idType.', 0)');
                 }
             }
         }

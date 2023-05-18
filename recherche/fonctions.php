@@ -126,14 +126,14 @@ function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteri
 // Verifier si le joueur peut faire la recherche pour l'Energie et effectuer la recherche
 function upgradeEnergie($idJoueur, $idPlanete) {
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-
+    echo "Debut de la vérification";
     // Récupérer le niveau actuel du laboratoire et de la technologie énergie pour la planète donnée
     $query = "SELECT niveauLabo, niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idPlanete', $idPlanete);
     $stmt->execute();
     $infrastructure = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    echo "Récupération des niveaux effectuée";
     // Récupérer les niveaux
     $niveauLabo = $infrastructure['niveauLabo'];
     $niveauTechEnergie = $infrastructure['niveauTechEnergie'];
@@ -151,11 +151,11 @@ function upgradeEnergie($idJoueur, $idPlanete) {
         $coutMetal = $cout['coutMetal'];
         $coutEnergie = $cout['coutEnergie'];
         $coutDeuterium = $cout['coutDeuterium'];
-
+        echo "le labo est bien niveau 1 ou plus";
         // Vérifier les ressources disponibles
         if (checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)) {
             // Si oui on effectue la recherche pour l'énergie
-
+            echo "le joueur a les ressources";
             // Mise à jour du niveau de la technologie énergie dans l'infrastructure
             $query = "UPDATE infrastructure SET niveauTechEnergie = niveauTechEnergie + 1 WHERE idPlanete = :idPlanete";
             $stmt = $pdo->prepare($query);

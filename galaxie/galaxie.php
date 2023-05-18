@@ -68,27 +68,29 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                         <th>Nom de la planète</th>
                         <th>Joueur</th>
                         <th>Type</th>
-                        <th>Position</th>
+                        <!-- <th>Position</th> -->
                         <th>Manager</th>
-                        <th>Aquerire</th>
+                        <th>Acquérir</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- On souhaite afficher uniquement les planètes existantes, donc nous utilisons la même méthode que précédemment -->
                     <?php foreach ($planetes as $planete) : ?>
-                        <!-- On souhaite afficher uniquement les planete existante, on a donc utiliser la même méthode que précédement -->
                         <tr>
                             <td><?php echo $planete['nom']; ?></td>
                             <td><?php echo getJoueur($pdo, $planete['idJoueur'])['nom']; ?></td>
-                            <td><?php echo getTypePlanete($pdo, $planete['idType'])['nom']; ?></td>
-                            <td><?php echo $planete['position']; ?></td>
-                            <td><?php
-                                // Si la planète appartient au joueur connecté, on affiche un lien vers la page de gestion de la planète
+                            <td><?php echo getTypePlanete($pdo, $planete['idType']); ?></td>
+                            <!-- <td><?php echo $planete['position']; ?></td> -->
+                            <td>
+                                <?php
+                                // Si la planète appartient au joueur connecté, affiche un lien vers la page de gestion de la planète
                                 if ($planete['idJoueur'] == $_SESSION['idJoueur']) {
                                     echo '<a href="planete.php?planete=' . $planete['id'] . '">Gérer</a>';
                                 } else {
                                     echo 'Non';
                                 }
                                 ?>
+                            </td>
                             <td>
                                 <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
                             </td>
@@ -136,8 +138,5 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
         });
     }
 </script>
-
-
-
 
 </html>

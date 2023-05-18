@@ -28,7 +28,7 @@ function getSystemesSolaire($pdo, $galaxieId) {
 
 // Récupération des planètes d'un système solaire
 function getPlanetes($pdo, $systemeSolaireId) {
-    $stmt = $pdo->prepare('SELECT * FROM planete WHERE idSysteme = :systeme_solaire_id');
+    $stmt = $pdo->prepare('SELECT * FROM planete WHERE idSystemeSolaire = :systeme_solaire_id');
     $stmt->execute(['systeme_solaire_id' => $systemeSolaireId]);
     $planetes = $stmt->fetchAll();
     usort($planetes, function ($a, $b) {
@@ -52,7 +52,11 @@ function getJoueur($pdo, $joueurId) {
 function getTypePlanete($pdo, $typeId) {
     $stmt = $pdo->prepare('SELECT nom FROM type_planete WHERE id = :idType');
     $stmt->execute(['idType' => $typeId]);
-    return $stmt->fetch();
+    $result = $stmt->fetch();
+    return $result['nom'];
 }
+
+
+
 
 ?>
