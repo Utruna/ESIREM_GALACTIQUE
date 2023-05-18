@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) {
 	session_start();
 }
+
+include "alert.php";
+
 // Si la connexion a la base de donnée ne fonctionne pas on affiche un message d'erreur
 try {
 	// Connexion à MySQL avec PDO
@@ -22,11 +25,11 @@ if (isset($_POST['creation_universe'])) {
 
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
 	<meta charset="utf-8" />
 	<title>Page de connexion</title>
 	<!-- <link rel="stylesheet" href="../style/css_index.css" /> -->
+    <link rel="stylesheet" href="../style/alert.css" />
 </head>
 
 <body>
@@ -78,6 +81,8 @@ if (isset($_POST['creation_universe'])) {
 					<button>Crée son compte</button>
 				</form>
 			</div>
+
+
 			<div id="creation_univers" method="post">
 				<form method="post" action="./../univers/create_universe.php">
 					<label for="nom_univers">Nom de l'univers :</label>

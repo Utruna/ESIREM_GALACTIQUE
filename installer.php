@@ -63,14 +63,14 @@ try {
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS planete (
     id INT NOT NULL AUTO_INCREMENT,
-    idSysteme INT NOT NULL,
+    idSystemeSolaire INT NOT NULL,
     position INT NOT NULL,
     nom VARCHAR(255) NOT NULL,
     pseudo VARCHAR(255) NOT NULL DEFAULT "Planète sans nom",
     idType INT NOT NULL,
     idJoueur INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (idSysteme) REFERENCES systeme_solaire(id),
+    FOREIGN KEY (idSystemeSolaire) REFERENCES systeme_solaire(id),
     FOREIGN KEY (idJoueur) REFERENCES joueur(id)
   );
 ');echo "- Planete créé </br>";
@@ -391,7 +391,7 @@ CREATE TABLE IF NOT EXISTS bouclier (
 
     echo "- Initialisation table </br>";
 
-  $pdo->exec('INSERT INTO type_planete (type) VALUES ("banale"), ("aquatique"), ("tellurique")');
+  $pdo->exec('INSERT INTO type_planete (nom) VALUES ("banale"), ("aquatique"), ("tellurique")');
   echo "- Type planete implémanteé </br>";
 
   $pdo->exec('

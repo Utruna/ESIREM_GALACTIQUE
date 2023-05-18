@@ -5,10 +5,6 @@ if (!isset($_SESSION)) {
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
 $idUnivers = $_SESSION['idUnivers'];
-$idPlanete = $_POST['idPlanete'];
-
-upgradeEnergie($idJoueur, $idPlanete);
-
 /*
 SELECT COUNT(*) AS count: Sélectionne le nombre total de résultats et le renomme en count.
 
@@ -31,7 +27,8 @@ cela signifie que le joueur possède toutes les recherches requises pour obtenir
 // Vérification des recherches pour les ions
 
 // Vérification si le compte des recherche demander est égale à 0
-function countResearch($query, $idJoueur) {
+function countResearch($query, $idJoueur)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idJoueur', $idJoueur);
@@ -40,73 +37,77 @@ function countResearch($query, $idJoueur) {
     return $result['count'];
 }
 
-function checkIonsResearch($idJoueur) {
-    $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-    $query = "SELECT COUNT(*) AS count
-                FROM contrainte_recherche cr
-                INNER JOIN recherche r ON cr.idRecherche = r.id
-                WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'ions' AND niveau = 0)
-                AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
-    // Vérification des recherches pour les ions
-    $count = countResearch($query, $idJoueur);
-    // Si le résultat count est égal à 0, cela signifie que le joueur possède toutes les recherches requises pour obtenir les ions.
-    if ($count == 0) {
-        echo "Le joueur possède les recherches nécessaires pour obtenir les ions.";
-        return true;
-    } else {
-        echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir les ions.";
-        return false;
-    }
-}
+// function checkIonsResearch($idJoueur)
+// {
+//     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
+//     $query = "SELECT COUNT(*) AS count
+//                 FROM contrainte_recherche cr
+//                 INNER JOIN recherche r ON cr.idRecherche = r.id
+//                 WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'ions' AND niveau = 0)
+//                 AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
+//     // Vérification des recherches pour les ions
+//     $count = countResearch($query, $idJoueur);
+//     // Si le résultat count est égal à 0, cela signifie que le joueur possède toutes les recherches requises pour obtenir les ions.
+//     if ($count == 0) {
+//         echo "Le joueur possède les recherches nécessaires pour obtenir les ions.";
+//         return true;
+//     } else {
+//         echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir les ions.";
+//         return false;
+//     }
+// }
 
-function checkLaserResearch($idJoueur) {
-    $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-    $query = "SELECT COUNT(*) AS count
-                FROM contrainte_recherche cr
-                INNER JOIN recherche r ON cr.idRecherche = r.id
-                WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'laser' AND niveau = 0)
-                AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
+// function checkLaserResearch($idJoueur)
+// {
+//     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
+//     $query = "SELECT COUNT(*) AS count
+//                 FROM contrainte_recherche cr
+//                 INNER JOIN recherche r ON cr.idRecherche = r.id
+//                 WHERE cr.idRechercheSouhaiter = (SELECT id FROM recherche WHERE typeRecherche = 'laser' AND niveau = 0)
+//                 AND cr.idRecherche NOT IN (SELECT idRecherche FROM joueur_recherche WHERE idJoueur = :idJoueur)";
 
-    $count = countResearch($query, $idJoueur);
+//     $count = countResearch($query, $idJoueur);
 
-    if ($count == 0) {
-        echo "Le joueur possède les recherches nécessaires pour obtenir le laser.";
-        return true;
-    } else {
-        echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir le laser.";
-        return false;
-    }
-}
+//     if ($count == 0) {
+//         echo "Le joueur possède les recherches nécessaires pour obtenir le laser.";
+//         return true;
+//     } else {
+//         echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir le laser.";
+//         return false;
+//     }
+// }
 
-function checkBouclierResearch($idJoueur) {
-    $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-    $queryLaser = "SELECT COUNT(*) AS count
-                FROM joueur_recherche jr
-                INNER JOIN recherche r ON jr.idRecherche = r.id
-                WHERE jr.idJoueur = :idJoueur
-                AND r.typeRecherche = 'laser'
-                AND r.niveau >= 5";
+// function checkBouclierResearch($idJoueur)
+// {
+//     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
+//     $queryLaser = "SELECT COUNT(*) AS count
+//                 FROM joueur_recherche jr
+//                 INNER JOIN recherche r ON jr.idRecherche = r.id
+//                 WHERE jr.idJoueur = :idJoueur
+//                 AND r.typeRecherche = 'laser'
+//                 AND r.niveau >= 5";
 
-    $queryEnergie = "SELECT COUNT(*) AS count
-                FROM joueur_recherche jr
-                INNER JOIN recherche r ON jr.idRecherche = r.id
-                WHERE jr.idJoueur = :idJoueur
-                AND r.typeRecherche = 'energie'
-                AND r.niveau >= 8";
+//     $queryEnergie = "SELECT COUNT(*) AS count
+//                 FROM joueur_recherche jr
+//                 INNER JOIN recherche r ON jr.idRecherche = r.id
+//                 WHERE jr.idJoueur = :idJoueur
+//                 AND r.typeRecherche = 'energie'
+//                 AND r.niveau >= 8";
 
-    $countLaser = countResearch($queryLaser, $idJoueur);
-    $countEnergie = countResearch($queryEnergie, $idJoueur);
+//     $countLaser = countResearch($queryLaser, $idJoueur);
+//     $countEnergie = countResearch($queryEnergie, $idJoueur);
 
-    if ($countLaser == 0 && $countEnergie == 0) {
-        echo "Le joueur possède les recherches nécessaires pour obtenir le bouclier.";
-        return true;
-    } else {
-        echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir le bouclier.";
-        return false;
-    }
-}
-// Vérification des ressource du joueur
-function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium) {
+//     if ($countLaser == 0 && $countEnergie == 0) {
+//         echo "Le joueur possède les recherches nécessaires pour obtenir le bouclier.";
+//         return true;
+//     } else {
+//         echo "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir le bouclier.";
+//         return false;
+//     }
+// }
+// // Vérification des ressource du joueur
+function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)
+{
     // Récupérer les ressources actuelles du joueur
     $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur";
     $stmt = $pdo->prepare($query);
@@ -127,22 +128,27 @@ function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteri
 }
 
 // Verifier si le joueur peut faire la recherche pour l'Energie et effectuer la recherche
-function upgradeEnergie($idJoueur, $idPlanete) {
+function upgradeEnergie($idJoueur, $idPlanete)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-    echo "Debut de la vérification";
+    echo "Début de la vérification<br>";
+
     // Récupérer le niveau actuel du laboratoire et de la technologie énergie pour la planète donnée
     $query = "SELECT niveauLabo, niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idPlanete', $idPlanete);
     $stmt->execute();
     $infrastructure = $stmt->fetch(PDO::FETCH_ASSOC);
-    echo "Récupération des niveaux effectuée";
+    echo "Récupération des niveaux effectuée<br>";
+
     // Récupérer les niveaux
     $niveauLabo = $infrastructure['niveauLabo'];
     $niveauTechEnergie = $infrastructure['niveauTechEnergie'];
 
     // Vérifier si le joueur peut faire la recherche pour l'énergie
     if ($niveauLabo >= 1) {
+        echo "Le laboratoire est de niveau 1 ou plus<br>";
+
         // Vérifier les ressources nécessaires pour l'amélioration de l'énergie
         $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'RECHERCHE ENERGIE' AND augmentationParNiveau = :niveau";
         $stmt = $pdo->prepare($query);
@@ -154,16 +160,18 @@ function upgradeEnergie($idJoueur, $idPlanete) {
         $coutMetal = $cout['coutMetal'];
         $coutEnergie = $cout['coutEnergie'];
         $coutDeuterium = $cout['coutDeuterium'];
-        echo "le labo est bien niveau 1 ou plus";
+        echo "Coûts de l'amélioration : Metal = $coutMetal, Energie = $coutEnergie, Deuterium = $coutDeuterium<br>";
+
         // Vérifier les ressources disponibles
         if (checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)) {
-            // Si oui on effectue la recherche pour l'énergie
-            echo "le joueur a les ressources";
+            echo "Le joueur possède suffisamment de ressources pour effectuer la recherche<br>";
+
             // Mise à jour du niveau de la technologie énergie dans l'infrastructure
             $query = "UPDATE infrastructure SET niveauTechEnergie = niveauTechEnergie + 1 WHERE idPlanete = :idPlanete";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':idPlanete', $idPlanete);
             $stmt->execute();
+            echo "Mise à jour du niveau de la technologie énergie effectuée<br>";
 
             // Mise à jour des ressources du joueur après
             $query = "UPDATE ressource SET stockMetal = stockMetal - :coutMetal, stockEnergie = stockEnergie - :coutEnergie, stockDeuterium = stockDeuterium - :coutDeuterium WHERE idJoueur = :idJoueur";
@@ -173,16 +181,17 @@ function upgradeEnergie($idJoueur, $idPlanete) {
             $stmt->bindValue(':coutDeuterium', $coutDeuterium);
             $stmt->bindValue(':idJoueur', $idJoueur);
             $stmt->execute();
+            echo "Mise à jour des ressources du joueur effectuée<br>";
         } else {
-            echo "Le joueur ne possède pas suffisamment de ressources pour effectuer la recherche.";
+            echo "Le joueur ne possède pas suffisamment de ressources pour effectuer la recherche.<br>";
             // renvoyer une erreur
         }
     } else {
-        echo "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.";
+        echo "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.<br>";
         // renvoyer une erreur
     }
 }
-
+            
 
 // // Verifier si le joueur peut faire la recherche pour le Laser et effectuer la recherche
 // function upgradeLaser() {
@@ -203,6 +212,3 @@ function upgradeEnergie($idJoueur, $idPlanete) {
 // function upgradeArmement() {
     
 // }
-
-
-?>

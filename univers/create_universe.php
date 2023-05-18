@@ -1,4 +1,8 @@
-<?php 
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 if(isset($_POST['create_universe'])) {
     $nomUnivers = $_POST['nom_univers'];
@@ -9,7 +13,7 @@ if(isset($_POST['create_universe'])) {
     $count = $stmt->fetchColumn();
 
     if ($count > 0) { // Si le nom de l'univers existe déjà
-        $error_message = 'Le nom de l\'univers existe déjà.'; 
+        $_SESSION['bad_alert'] = "Le nom de l'univers existe déjà: $nomUnivers";
         include './../acceuille/index.php'; // Redirige vers la page index
         exit;
     }
@@ -42,7 +46,7 @@ if(isset($_POST['create_universe'])) {
                 }
             }
         }
+        $_SESSION['good_alert'] = "Nouvel univers créé: $nomUnivers";
     }
-    
     header('Location: ./../acceuille/index.php');
 }

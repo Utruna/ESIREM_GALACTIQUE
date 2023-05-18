@@ -2,7 +2,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-include './fonctions.php';
+
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
 $idUnivers = $_SESSION['idUnivers'];
@@ -21,12 +21,15 @@ $idPlanete = $_SESSION['idPlanete'];
 
 <body>
     <div>
-        <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
-        <h2>Energie</h2>
-        <p class="resource">Deutérium: 2 000</p>
-        <p class="resource">Temps de construction : 4 seconde</p>
-        <p>Production d’énergie augmenter de 2%</p>
-        <button type="button" name="bouton" data-delai="4">Rechercher</button>
+        <form action="./fonctions.php" method="post">
+            <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
+            <h2>Energie</h2>
+            <p class="resource">Deutérium: 2 000</p>
+            <p class="resource">Temps de construction : 4 seconde</p>
+            <p>Production d’énergie augmenter de 2%</p>
+            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+            <button type="submit" name="bouton" data-delai="4">Rechercher</button>
+        </form>
     </div>
     <div>
         <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
@@ -43,40 +46,40 @@ $idPlanete = $_SESSION['idPlanete'];
 </html>
 
 <script>
-    $(document).ready(function() {
-        $('button[name="bouton"]').click(function() {
-            var bouton = $(this); // Stockez une référence au bouton cliqué
-            
-            bouton.prop('disabled', true); // Désactivez le bouton pendant le délai
-            
-            // Récupérez la durée du délai à partir de l'attribut data-delai
-            var delai = parseInt(bouton.data('delai'));
-            
-            // Affichez un message d'attente
-            alert('Recherche en cours. Veuillez patienter...');
-            
-            //  On effectue la recherch ene utilisant ajax 
-            $.ajax({
-                url: 'fonction.php',
-                type: 'POST',
-                dataType: 'json',
-                success: function(response) {
-                    if (response.result) {
-                        alert('Les recherches nécessaires sont satisfaites.');
-                        // Effectuez d'autres actions si nécessaire
-                    } else {
-                        alert('Les recherches nécessaires ne sont pas satisfaites.');
-                        // Effectuez d'autres actions si nécessaire
-                    }
-                },
-                error: function() {
-                    alert('Une erreur s\'est produite lors de la vérification des recherches.');
-                    // Gérez l'erreur si nécessaire
-                },
-                complete: function() {
-                    bouton.prop('disabled', false); // Réactivez le bouton après la recherche
-                }
-            });
-        });
-    });
+    // $(document).ready(function() {
+    //     $('button[name="bouton"]').click(function() {
+    //         var bouton = $(this); // Stockez une référence au bouton cliqué
+    //
+    //         bouton.prop('disabled', true); // Désactivez le bouton pendant le délai
+    //
+    //         // Récupérez la durée du délai à partir de l'attribut data-delai
+    //         var delai = parseInt(bouton.data('delai'));
+    //
+    //         // Affichez un message d'attente
+    //         alert('Recherche en cours. Veuillez patienter...');
+    //
+    //         //  On effectue la recherch ene utilisant ajax
+    //         $.ajax({
+    //             url: 'fonction.php',
+    //             type: 'POST',
+    //             dataType: 'json',
+    //             success: function(response) {
+    //                 if (response.result) {
+    //                     alert('Les recherches nécessaires sont satisfaites.');
+    //                     // Effectuez d'autres actions si nécessaire
+    //                 } else {
+    //                     alert('Les recherches nécessaires ne sont pas satisfaites.');
+    //                     // Effectuez d'autres actions si nécessaire
+    //                 }
+    //             },
+    //             error: function() {
+    //                 alert('Une erreur s\'est produite lors de la vérification des recherches.');
+    //                 // Gérez l'erreur si nécessaire
+    //             },
+    //             complete: function() {
+    //                 bouton.prop('disabled', false); // Réactivez le bouton après la recherche
+    //             }
+    //         });
+    //     });
+    // });
 </script>

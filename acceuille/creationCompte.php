@@ -17,17 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && isset($_P
     $rep->execute(['email' => $email]);
     $joueur = $rep->fetch();
 
-    if ($joueur) {
-        // renvoie sur une page d'erreur hTTP 409
-        header("Location:/erreur409.php");
-    }
-    else {
+    if (! $joueur){
         // Envoie dans la bdd
         $envoi = $pdo->prepare('INSERT INTO joueur (nom, email, password) VALUES (:nom, :email, :password)');
         $envoi->execute(['nom' => $nom, 'email' => $email, 'password' => $passwordHacher]);
         $joueur = $envoi->fetch();
-        header('Location:index.php');
+        $_SESSION['good_alert'] = "Compte crée ! Connectez vous !";
     }
+    else $_SESSION['bad_alert'] = "Vous possedez déjà un compte <a href=' onclick='alert(\"CHEH!\")'>Mot de passe oublié ?</a>";
 
+    header('Location:index.php');
 }
 ?>
