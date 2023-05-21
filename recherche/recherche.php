@@ -3,7 +3,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 include './../univers/alert.php';
-
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
 $idUnivers = $_SESSION['idUnivers'];
@@ -16,13 +15,13 @@ if (isset($_POST['idPlanete'])) {
 
 // =================== RECHERCHE ===================
 if (isset($_SESSION['energie'])) {
-    //upgradeEnergie($idJoueur, $idPlanete);
+    upgradeEnergie($idJoueur, $idPlanete);
 }
 $query = "SELECT niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
 $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
-$niveauEnergie = $stmt->fetch();
+$niveauEnergie = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // =================== LASER ===================
 if (isset($_SESSION['laser'])) {
@@ -32,17 +31,38 @@ $query = "SELECT niveauTechLaser FROM infrastructure WHERE idPlanete = :idPlanet
 $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
-$niveauLaser = $stmt->fetch();
+$niveauLaser = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // =================== IONS ===================
 if (isset($_SESSION['ions'])) {
-    //upgradeIons($idJoueur, $idPlanete);
+    upgradeIons($idJoueur, $idPlanete);
 }
 $query = "SELECT niveauTechIons FROM infrastructure WHERE idPlanete = :idPlanete";
 $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
-$niveauIons = $stmt->fetch();
+$niveauIons = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// =================== BOUCLIER ===================
+if (isset($_SESSION['bouclier'])) {
+    upgradeBouclier($idJoueur, $idPlanete);
+}
+$query = "SELECT niveauTechBouclier FROM infrastructure WHERE idPlanete = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$niveauBouclier = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// =================== ARMEMENT ===================
+if (isset($_SESSION['armement'])) {
+    upgradeArmement($idJoueur, $idPlanete);
+}
+$query = "SELECT niveauTechArmement FROM infrastructure WHERE idPlanete = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +77,7 @@ $niveauIons = $stmt->fetch();
 
 <body>
     <div>
-        <form action="./fonctions.php" method="post">
+        <form action="./energie.php" method="post">
             <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
             <h2>Energie</h2>
             <h3>Niveau actuel : <?php echo $niveauEnergie['niveauTechEnergie'] ?>/10</h3>
@@ -70,7 +90,7 @@ $niveauIons = $stmt->fetch();
         </form>
     </div>
     <div>
-        <form action="./fonctions.php" method="post">
+        <form action="./laser.php" method="post">
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
             <h2>laser</h2>
             <h3>Niveau actuel : <?php echo $niveauLaser['niveauTechLaser'] ?>/10</h3>
@@ -82,13 +102,37 @@ $niveauIons = $stmt->fetch();
         </form>
     </div>
     <div>
-        <form action="./fonctions.php" method="post">
+        <form action="./ions.php" method="post">
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
             <h2>Ions</h2>
             <h3>Niveau actuel : <?php echo $niveauIons['niveauTechIons'] ?>/10</h3>
             <p class="resource">Deutérium: 500 </p>
             <p class="resource">Temps de construction : 8 seconde</p>
             <input type="text" name="ions" value="true" style="display: none">
+            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+            <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
+        </form>
+    </div>
+    <div>
+        <form action="./bouclier.php" method="post">
+            <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
+            <h2>Bouclier</h2>
+            <h3>Niveau actuel : <?php echo $niveauBouclier['niveauTechBouclier'] ?>/10</h3>
+            <p class="resource">Deutérium: 1000 </p>
+            <p class="resource">Temps de construction : 5 seconde</p>
+            <input type="text" name="bouclier" value="true" style="display: none">
+            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+            <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
+        </form>
+    </div>
+    <div>
+        <form action="./armement.php" method="post">
+            <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
+            <h2>Armee</h2>
+            <h3>Niveau actuel : <?php echo $niveauArmement['niveauTechArmement'] ?>/10</h3>
+            <p class="resource">Deutérium: 1000 </p>
+            <p class="resource">Temps de construction : 5 seconde</p>
+            <input type="text" name="armement" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
             <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
         </form>

@@ -29,5 +29,6 @@ if (isset($_POST['idPlanete'])) {
     $stmt = $pdo->prepare('INSERT INTO infrastructure (idPlanete, niveauLabo, niveauChantierSpatial, niveauUsineNanite, niveauUsineMetal, niveauCentraleSolaire, niveauCentraleFusion, niveauArtillerieLaser, niveauCannonIons, niveauBouclier, niveauTechEnergie, niveauTechLaser, niveauTechIons, niveauTechBouclier, niveauTechArmement) VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
     $stmt->execute(['idPlanete' => $idPlanete]);
     // Renvoyer vers la page de selection de galaxie
+    $_SESSION['good_alert'] = "Planete aquise !";
     header('Location: ./galaxie.php');
 }

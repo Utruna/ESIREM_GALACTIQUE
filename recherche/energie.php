@@ -8,7 +8,7 @@ $idUnivers = $_SESSION['idUnivers'];
 $idPlanete = $_POST['idPlanete'];
 
 //upgradeEnergie($idJoueur, $idPlanete);
-upgradeLaser($idJoueur, $idPlanete);
+upgradeEnergie($idJoueur, $idPlanete);
 
 /*
 SELECT COUNT(*) AS count: Sélectionne le nombre total de résultats et le renomme en count.
@@ -169,150 +169,75 @@ function updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteriu
     $stmt->execute();
 }
 
-
-
-// Verifier si le joueur peut faire la recherche pour l'Energie et effectuer la recherche
-// function upgradeEnergie($idJoueur, $idPlanete)
-// {
-//     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-//     echo "Debut de la vérification";
-//     // Récupérer le niveau actuel du laboratoire et de la technologie énergie pour la planète donnée
-//     $query = "SELECT niveauLabo, niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
-//     $stmt = $pdo->prepare($query);
-//     $stmt->bindValue(':idPlanete', $idPlanete);
-//     $stmt->execute();
-//     $infrastructure = $stmt->fetch(PDO::FETCH_ASSOC);
-//     echo "Récupération des niveaux effectuée";
-//     // Récupérer les niveaux
-//     $niveauLabo = $infrastructure['niveauLabo'];
-//     $niveauTechEnergie = $infrastructure['niveauTechEnergie'];
-
-//     // Si le niveau de l'énergie est au maximum on annule
-//     if ($niveauTechEnergie >= 10) {
-//         $_SESSION['bad_alert'] = "Vous avez atteint le niveau maximum pour la technologie énergie.";
-//         header('Location: ./recherche.php');
-//         exit();
-//     }
-//     // Vérifier si le joueur peut faire la recherche pour l'énergie
-//     if ($niveauLabo >= 1) {
-//         // Vérifier les ressources nécessaires pour l'amélioration de l'énergie
-//         $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_energie' AND augmentationParNiveau = :niveau";
-//         $stmt = $pdo->prepare($query);
-//         $stmt->bindValue(':niveau', $niveauTechEnergie + 1);
-//         $stmt->execute();
-//         $cout = $stmt->fetch(PDO::FETCH_ASSOC);
-
-//         // Récupérer les coûts
-//         if (empty($cout['coutMetal'])) {
-//             $coutMetal = 0;
-//         } else {
-//             $coutMetal = $cout['coutMetal'];
-//         }
-//         if (empty($cout['coutEnergie'])) {
-//             $coutEnergie = 0;
-//         } else {
-//             $coutEnergie = $cout['coutEnergie'];
-//         }
-//         if (empty($cout['coutDeuterium'])) {
-//             $coutDeuterium = 0;
-//         } else {
-//             $coutDeuterium = $cout['coutDeuterium'];
-//         }
-
-//         echo "le labo est bien niveau 1 ou plus";
-//         // Vérifier les ressources disponibles
-//         if (checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)) {
-//             // Si oui on effectue la recherche pour l'énergie
-//             echo "le joueur a les ressources";
-//             // Mise à jour du niveau de la technologie énergie dans l'infrastructure
-//             $query = "UPDATE infrastructure SET niveauTechEnergie = niveauTechEnergie + 1 WHERE idPlanete = :idPlanete";
-//             $stmt = $pdo->prepare($query);
-//             $stmt->bindValue(':idPlanete', $idPlanete);
-//             $stmt->execute();
-
-//             // Mise à jour des ressources du joueur après
-//             updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium);
-//             $_SESSION['good_alert'] = "La recherche a bien été effectuée.";
-//             header('Location: ./recherche.php');
-//         } else {
-//             $_SESSION['bad_alert'] = "Le joueur ne possède pas les ressources nécessaires pour effectuer la recherche.";
-//             // renvoyer une erreur
-//             header('Location: ./recherche.php');
-//         }
-//     } else {
-//         $_SESSION['bad_alert'] = "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.";
-//         // renvoyer une erreur
-//         header('Location: ./recherche.php');
-//     }
-// }
-
-
-// // Verifier si le joueur peut faire la recherche pour le Laser et effectuer la recherche
-// Verifier si le joueur peut faire la recherche pour le Laser et effectuer la recherche
-function upgradeLaser($idJoueur, $idPlanete)
+function upgradeEnergie($idJoueur, $idPlanete)
 {
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
-    echo "Début de la vérification";
-    $query = "SELECT niveauLabo, niveauTechLaser FROM infrastructure WHERE idPlanete = :idPlanete";
+    echo "Debut de la vérification";
+    // Récupérer le niveau actuel du laboratoire et de la technologie énergie pour la planète donnée
+    $query = "SELECT niveauLabo, niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idPlanete', $idPlanete);
     $stmt->execute();
     $infrastructure = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    echo "Récupération des niveaux effectuée";
     // Récupérer les niveaux
     $niveauLabo = $infrastructure['niveauLabo'];
-    $niveauTechLaser = $infrastructure['niveauTechLaser'];
+    $niveauTechEnergie = $infrastructure['niveauTechEnergie'];
 
-    // Vérifier si le joueur peut faire la recherche pour le laser
-    $verif = checkLaserResearch($idPlanete);
-    var_dump($verif);
-    if ($verif) {
-        $query = "SELECT coutMetal, coutCristal, coutDeuterium FROM cout WHERE structureType = 'recherche_laser' AND augmentationParNiveau = :niveau";
+    // Si le niveau de l'énergie est au maximum on annule
+    if ($niveauTechEnergie >= 10) {
+        $_SESSION['bad_alert'] = "Vous avez atteint le niveau maximum pour la technologie énergie.";
+        header('Location: ./recherche.php');
+        exit();
+    }
+    // Vérifier si le joueur peut faire la recherche pour l'énergie
+    if ($niveauLabo >= 1) {
+        // Vérifier les ressources nécessaires pour l'amélioration de l'énergie
+        $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_energie'";
         $stmt = $pdo->prepare($query);
-        $stmt->bindValue(':niveau', $niveauTechLaser + 1);
         $stmt->execute();
         $cout = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Récupérer les coûts
-        $coutMetal = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
-        $coutEnergie = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
-        $coutDeuterium = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
+        if (empty($cout['coutMetal'])) {
+            $coutMetal = 0;
+        } else {
+            $coutMetal = $cout['coutMetal'];
+        }
+        if (empty($cout['coutEnergie'])) {
+            $coutEnergie = 0;
+        } else {
+            $coutEnergie = $cout['coutEnergie'];
+        }
+        if (empty($cout['coutDeuterium'])) {
+            $coutDeuterium = 0;
+        } else {
+            $coutDeuterium = $cout['coutDeuterium'];
+        }
 
+        echo "le labo est bien niveau 1 ou plus";
         // Vérifier les ressources disponibles
         if (checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)) {
-            // Si oui, on effectue la recherche pour le laser
-            // Mise à jour du niveau de la technologie laser dans l'infrastructure
-            $query = "UPDATE infrastructure SET niveauTechLaser = niveauTechLaser + 1 WHERE idPlanete = :idPlanete";
+            // Si oui on effectue la recherche pour l'énergie
+            echo "le joueur a les ressources";
+            // Mise à jour du niveau de la technologie énergie dans l'infrastructure
+            $query = "UPDATE infrastructure SET niveauTechEnergie = niveauTechEnergie + 1 WHERE idPlanete = :idPlanete";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':idPlanete', $idPlanete);
             $stmt->execute();
 
             // Mise à jour des ressources du joueur après
             updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium);
-            $_SESSION['good_alert'] = "La recherche pour le laser a bien été effectuée.";
+            $_SESSION['good_alert'] = "La recherche a bien été effectuée.";
             header('Location: ./recherche.php');
         } else {
             $_SESSION['bad_alert'] = "Le joueur ne possède pas les ressources nécessaires pour effectuer la recherche.";
+            // renvoyer une erreur
             header('Location: ./recherche.php');
         }
     } else {
-        $_SESSION['bad_alert'] = "Le joueur ne possède pas toutes les recherches nécessaires pour obtenir le laser.";
+        $_SESSION['bad_alert'] = "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.";
+        // renvoyer une erreur
         header('Location: ./recherche.php');
     }
 }
-
-
-// // Verifier si le joueur peut faire la recherche pour les Ions et effectuer la recherche
-// function upgradeIons() {
-    
-// }
-
-// // Verifier si le joueur peut faire la recherche pour le Bouclier et effectuer la recherche
-// function upgradeBouclier() {
-
-// }
-
-// // Verifier si le joueur peut faire la recherche pour l'armement et effectuer la recherche
-// function upgradeArmement() {
-    
-// }
