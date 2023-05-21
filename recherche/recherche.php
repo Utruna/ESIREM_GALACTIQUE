@@ -13,15 +13,36 @@ if (isset($_POST['idPlanete'])) {
 } else {
     $idPlanete = $_SESSION['idPlanete'];
 }
+
 // =================== RECHERCHE ===================
-if(isset($_SESSION['energie'])){
-    upgradeEnergie($idJoueur, $idPlanete);
+if (isset($_SESSION['energie'])) {
+    //upgradeEnergie($idJoueur, $idPlanete);
 }
 $query = "SELECT niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
 $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauEnergie = $stmt->fetch();
+
+// =================== LASER ===================
+if (isset($_SESSION['laser'])) {
+    upgradeLaser($idJoueur, $idPlanete);
+}
+$query = "SELECT niveauTechLaser FROM infrastructure WHERE idPlanete = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$niveauLaser = $stmt->fetch();
+
+// =================== IONS ===================
+if (isset($_SESSION['ions'])) {
+    //upgradeIons($idJoueur, $idPlanete);
+}
+$query = "SELECT niveauTechIons FROM infrastructure WHERE idPlanete = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$niveauIons = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +60,7 @@ $niveauEnergie = $stmt->fetch();
         <form action="./fonctions.php" method="post">
             <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
             <h2>Energie</h2>
-            <h3>Niveau actuel : <?php echo $niveauEnergie['niveauTechEnergie'] ?></h3>
+            <h3>Niveau actuel : <?php echo $niveauEnergie['niveauTechEnergie'] ?>/10</h3>
             <p class="resource">Deutérium: 2 000</p>
             <p class="resource">Temps de construction : 4 seconde</p>
             <p>Production d’énergie augmenter de 2%</p>
@@ -49,21 +70,34 @@ $niveauEnergie = $stmt->fetch();
         </form>
     </div>
     <div>
-        <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
-        <h2>Laser</h2>
-        <p class="resource">Deutérium: <?php ?></p>
-        <p class="resource">Temps de construction : 8 seconde</p>
-        <?php
-
-        ?>
-        <button type="button" name="bouton" data-delai="8">Rechercher</button>
+        <form action="./fonctions.php" method="post">
+            <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
+            <h2>laser</h2>
+            <h3>Niveau actuel : <?php echo $niveauLaser['niveauTechLaser'] ?>/10</h3>
+            <p class="resource">Deutérium: 300</p>
+            <p class="resource">Temps de construction : 2 seconde</p>
+            <input type="text" name="laser" value="true" style="display: none">
+            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+            <button type="submit" name="boutonLaser" data-delai="4">Rechercher</button>
+        </form>
+    </div>
+    <div>
+        <form action="./fonctions.php" method="post">
+            <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
+            <h2>Ions</h2>
+            <h3>Niveau actuel : <?php echo $niveauIons['niveauTechIons'] ?>/10</h3>
+            <p class="resource">Deutérium: 500 </p>
+            <p class="resource">Temps de construction : 8 seconde</p>
+            <input type="text" name="ions" value="true" style="display: none">
+            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+            <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
+        </form>
     </div>
 </body>
 
 </html>
 
 <script>
-
     // $(document).ready(function() {
     //     $('button[name="bouton"]').click(function() {
     //         var bouton = $(this); // Stockez une référence au bouton cliqué
