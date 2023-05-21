@@ -2,12 +2,26 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+include './../univers/alert.php';
 
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
 $idUnivers = $_SESSION['idUnivers'];
-$_SESSION['idPlanete'] = $_POST['idPlanete'];
-$idPlanete = $_SESSION['idPlanete'];
+if (isset($_POST['idPlanete'])) {
+    $idPlanete = $_POST['idPlanete'];
+    $_SESSION['idPlanete'] = $idPlanete;
+} else {
+    $idPlanete = $_SESSION['idPlanete'];
+}
+// =================== RECHERCHE ===================
+if(isset($_SESSION['energie'])){
+    upgradeEnergie($idJoueur, $idPlanete);
+}
+$query = "SELECT niveauTechEnergie FROM infrastructure WHERE idPlanete = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$niveauEnergie = $stmt->fetch();
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,6 +30,7 @@ $idPlanete = $_SESSION['idPlanete'];
     <meta charset="utf-8" />
     <title>Recherche</title>
     <link rel="stylesheet" href="../style/css_index.css" />
+    <link rel="stylesheet" href="../style/alert.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -24,11 +39,13 @@ $idPlanete = $_SESSION['idPlanete'];
         <form action="./fonctions.php" method="post">
             <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
             <h2>Energie</h2>
+            <h3>Niveau actuel : <?php echo $niveauEnergie['niveauTechEnergie'] ?></h3>
             <p class="resource">Deutérium: 2 000</p>
             <p class="resource">Temps de construction : 4 seconde</p>
             <p>Production d’énergie augmenter de 2%</p>
+            <input type="text" name="energie" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="bouton" data-delai="4">Rechercher</button>
+            <button type="submit" name="boutonEnergie" data-delai="4">Rechercher</button>
         </form>
     </div>
     <div>
@@ -46,6 +63,7 @@ $idPlanete = $_SESSION['idPlanete'];
 </html>
 
 <script>
+
     // $(document).ready(function() {
     //     $('button[name="bouton"]').click(function() {
     //         var bouton = $(this); // Stockez une référence au bouton cliqué

@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
 	session_start();
 }
 
-include "alert.php";
+include "./../univers/alert.php";
 
 // Si la connexion a la base de donnée ne fonctionne pas on affiche un message d'erreur
 try {
@@ -25,11 +25,12 @@ if (isset($_POST['creation_universe'])) {
 
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
 	<meta charset="utf-8" />
 	<title>Page de connexion</title>
 	<!-- <link rel="stylesheet" href="../style/css_index.css" /> -->
-    <link rel="stylesheet" href="../style/alert.css" />
+	<link rel="stylesheet" href="../style/alert.css" />
 </head>
 
 <body>
@@ -62,12 +63,6 @@ if (isset($_POST['creation_universe'])) {
 				<br>
 				<button>Connection</button>
 				<br>
-				<?php
-				if (isset($_SESSION['error'])) {
-					echo '<p style="color:red">Email ou mot de passe incorrect</p>';
-					unset($_SESSION['error']);
-				}
-				?>
 			</form>
 			<div id="div_creation">
 				<h1>S'inscrire</h1>

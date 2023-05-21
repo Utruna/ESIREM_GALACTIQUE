@@ -80,9 +80,9 @@ try {
     id INT NOT NULL AUTO_INCREMENT,
     idUnivers INT NOT NULL,
     idJoueur INT NOT NULL,
-    stockMétal INT NOT NULL DEFAULT 0,
+    stockMetal INT NOT NULL DEFAULT 0,
     stockEnergie INT NOT NULL DEFAULT 0,
-    stockDeutérium INT NOT NULL DEFAULT 0,
+    stockDeuterium INT NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (idUnivers) REFERENCES univers(id),
     FOREIGN KEY (idJoueur) REFERENCES joueur(id)

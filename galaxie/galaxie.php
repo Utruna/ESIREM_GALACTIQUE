@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
 }
 
 include 'functions.php';
-
+include "./../univers/alert.php";
 // Connexion à MySQL avec PDO
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 
@@ -28,82 +28,82 @@ $systemeSolaireId = $_GET['systeme-solaire'] ?? $systemesSolaire[0]["id"];
 
 // Récupération des planètes du système solaire choisi
 $planetes = getPlanetes($pdo, $systemeSolaireId);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Page de gestion des planetes</title>
-    <link rel="stylesheet" href="../style/css_index.css"/>
+    <link rel="stylesheet" href="../style/css_index.css" />
 </head>
 
 <body>
-<h2>Vous êtes dans l'univers <?php echo $univers['nom']; ?></h2>
-<h2>Sélectionner une galaxie et un système solaire</h2>
+    <h2>Vous êtes dans l'univers <?php echo $univers['nom']; ?></h2>
+    <h2>Sélectionner une galaxie et un système solaire</h2>
 
-<form method="get">
-    <div>
-        <label>Galaxie :</label>
-        <select name="galaxie" onchange="this.form.submit()">
-            <?php foreach ($galaxies as $galaxie) : // Affichage de chaque galaxie dans une liste
+    <form method="get">
+        <div>
+            <label>Galaxie :</label>
+            <select name="galaxie" onchange="this.form.submit()">
+                <?php foreach ($galaxies as $galaxie) : // Affichage de chaque galaxie dans une liste
                 ?>
-                <option value="<?php echo $galaxie['id']; ?>"
-                    <?php if ($galaxieId == $galaxie['id'])
-                        echo 'selected'; ?>><?php echo $galaxie['nom']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
+                    <option value="<?php echo $galaxie['id']; ?>" <?php if ($galaxieId == $galaxie['id'])
+                                                                        echo 'selected'; ?>><?php echo $galaxie['nom']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-    <div>
-        <label>Système solaire :</label>
-        <select name="systeme-solaire" onchange="this.form.submit()">
-            <?php foreach ($systemesSolaire as $systeme) : // Affichage de chaque système solaire dans une liste
+        <div>
+            <label>Système solaire :</label>
+            <select name="systeme-solaire" onchange="this.form.submit()">
+                <?php foreach ($systemesSolaire as $systeme) : // Affichage de chaque système solaire dans une liste
                 ?>
-                <option value="<?php echo $systeme['id']; ?>" <?php if ($systemeSolaireId == $systeme['id']) echo 'selected'; ?>><?php echo $systeme['nom']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-</form>
+                    <option value="<?php echo $systeme['id']; ?>" <?php if ($systemeSolaireId == $systeme['id']) echo 'selected'; ?>><?php echo $systeme['nom']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </form>
 
-<div id="TablePlanetes">
-    <table>
-        <thead>
-        <tr>
-            <th>Nom de la planète</th>
-            <th>Joueur</th>
-            <th>Type</th>
-            <!-- <th>Position</th> -->
-            <th>Manager</th>
-            <th>Acquérir</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- On souhaite afficher uniquement les planètes existantes, donc nous utilisons la même méthode que précédemment -->
-        <?php foreach ($planetes as $planete){ ?>
-            <tr>
-                <td><?php echo $planete['nom']; ?></td>
-                <td><?php echo getJoueur($pdo, $planete['idJoueur'])['nom']; ?></td>
-                <td><?php echo getTypePlanete($pdo, $planete['idType']); ?></td>
-                <!-- <td><?php echo $planete['position']; ?></td> -->
-                <td>
-                    <?php
-                    // Si la planète appartient au joueur connecté, affiche un lien vers la page de gestion de la planète
-                    if ($planete['idJoueur'] == $_SESSION['idJoueur']) {
-                        echo '<a href="planete.php?planete=' . $planete['id'] . '">Gérer</a>';
-                    } else {
-                        echo 'Non';
-                    }
-                    ?>
-                </td>
-                <td>
-                    <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                        <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
-                    <?php
-                    }
-                    else {?>
-                        <button class="attaquer-planete"
+    <div id="TablePlanetes">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom de la planète</th>
+                    <th>Joueur</th>
+                    <th>Type</th>
+                    <!-- <th>Position</th> -->
+                    <th>Manager</th>
+                    <th>Acquérir</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- On souhaite afficher uniquement les planètes existantes, donc nous utilisons la même méthode que précédemment -->
+                <?php foreach ($planetes as $planete) { ?>
+                    <tr>
+                        <td><?php echo $planete['nom']; ?></td>
+                        <td><?php echo getJoueur($pdo, $planete['idJoueur'])['nom']; ?></td>
+                        <td><?php echo getTypePlanete($pdo, $planete['idType']); ?></td>
+                        <!-- <td><?php echo $planete['position']; ?></td> -->
+                        <td>
+                            <?php
+                            // Si la planète appartient au joueur connecté, affiche un lien vers la page de gestion de la planète
+                            if ($planete['idJoueur'] == $_SESSION['idJoueur']) {
+                                echo '<a href="planete.php?planete=' . $planete['id'] . '">Gérer</a>';
+                            } else {
+                                echo 'Non';
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+                                <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
+                            <?php
+                            } else { ?>
+
+                                <button class="attaquer-planete"
                         onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
                             Attaquer
                         </button>
@@ -146,25 +146,25 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                             </form>
                             
                         </div>
-                    <?php }?>
-                </td>
-                <td>
-                    <form action="./../recherche/recherche.php" method="post">
-                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                        <button type="submit">Rechercher</button><?php } ?>
-                    </form>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <form action="./../recherche/recherche.php" method="post">
+                                <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+                                    <button type="submit">Rechercher</button><?php } ?>
+                            </form>
 
-                </td>
-            </tr>
-        <?php }?>
-        </tbody>
-    </table>
-</div>
-<form method="post" action="./../deconection.php">
-    <button type="submit">Déconnexion</button>
-</form>
-<?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <form method="post" action="./../deconection.php">
+        <button type="submit">Déconnexion</button>
+    </form>
+    <?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
 </body>
 
 <script>
@@ -194,4 +194,5 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
         });
     }
 </script>
+
 </html>

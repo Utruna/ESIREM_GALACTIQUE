@@ -9,6 +9,7 @@ $idPlanete = $_POST['idPlanete'];
 
 upgradeEnergie($idJoueur, $idPlanete);
 
+
 /*
 SELECT COUNT(*) AS count: Sélectionne le nombre total de résultats et le renomme en count.
 
@@ -31,7 +32,8 @@ cela signifie que le joueur possède toutes les recherches requises pour obtenir
 // Vérification des recherches pour les ions
 
 // Vérification si le compte des recherche demander est égale à 0
-function countResearch($query, $idJoueur) {
+function countResearch($query, $idJoueur)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idJoueur', $idJoueur);
@@ -40,7 +42,8 @@ function countResearch($query, $idJoueur) {
     return $result['count'];
 }
 
-function checkIonsResearch($idJoueur) {
+function checkIonsResearch($idJoueur)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     $query = "SELECT COUNT(*) AS count
                 FROM contrainte_recherche cr
@@ -59,7 +62,8 @@ function checkIonsResearch($idJoueur) {
     }
 }
 
-function checkLaserResearch($idJoueur) {
+function checkLaserResearch($idJoueur)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     $query = "SELECT COUNT(*) AS count
                 FROM contrainte_recherche cr
@@ -78,7 +82,8 @@ function checkLaserResearch($idJoueur) {
     }
 }
 
-function checkBouclierResearch($idJoueur) {
+function checkBouclierResearch($idJoueur)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     $queryLaser = "SELECT COUNT(*) AS count
                 FROM joueur_recherche jr
@@ -106,11 +111,15 @@ function checkBouclierResearch($idJoueur) {
     }
 }
 // Vérification des ressource du joueur
-function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium) {
+function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)
+{
+    $idUnivers = $_SESSION['idUnivers'];
     // Récupérer les ressources actuelles du joueur
-    $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur";
+    $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(':idJoueur', $idJoueur);
+    $stmt->bindValue(':idUnivers', $idUnivers);
+    var_dump($stmt);
     $stmt->execute();
     $ressources = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -125,9 +134,42 @@ function checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteri
         return false;
     }
 }
+function updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)
+{
+    $idUnivers = $_SESSION['idUnivers'];
+    // Récupérer les ressources actuelles du joueur
+    $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':idJoueur', $idJoueur);
+    $stmt->bindValue(':idUnivers', $idUnivers);
+    $stmt->execute();
+    $ressources = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stockMetal = $ressources['stockMetal'];
+    $stockEnergie = $ressources['stockEnergie'];
+    $stockDeuterium = $ressources['stockDeuterium'];
+
+    // Calculer les ressources restantes
+    $Metal = $stockMetal - $coutMetal;
+    $Energie = $stockEnergie - $coutEnergie;
+    $Deuterium = $stockDeuterium - $coutDeuterium;
+
+    // Mise à jour des ressources du joueur
+    $query = "UPDATE ressource SET stockMetal = :restMetal, stockEnergie = :restEnergie, stockDeuterium = :restDeuterium WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':restMetal', $Metal);
+    $stmt->bindValue(':restEnergie', $Energie);
+    $stmt->bindValue(':restDeuterium', $Deuterium);
+    $stmt->bindValue(':idJoueur', $idJoueur);
+    $stmt->bindValue(':idUnivers', $idUnivers);
+    $stmt->execute();
+}
+
+
 
 // Verifier si le joueur peut faire la recherche pour l'Energie et effectuer la recherche
-function upgradeEnergie($idJoueur, $idPlanete) {
+function upgradeEnergie($idJoueur, $idPlanete)
+{
     $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
     echo "Debut de la vérification";
     // Récupérer le niveau actuel du laboratoire et de la technologie énergie pour la planète donnée
@@ -144,16 +186,29 @@ function upgradeEnergie($idJoueur, $idPlanete) {
     // Vérifier si le joueur peut faire la recherche pour l'énergie
     if ($niveauLabo >= 1) {
         // Vérifier les ressources nécessaires pour l'amélioration de l'énergie
-        $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'RECHERCHE ENERGIE' AND augmentationParNiveau = :niveau";
+        $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_energie' AND augmentationParNiveau = :niveau";
         $stmt = $pdo->prepare($query);
         $stmt->bindValue(':niveau', $niveauTechEnergie + 1);
         $stmt->execute();
         $cout = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Récupérer les coûts
-        $coutMetal = $cout['coutMetal'];
-        $coutEnergie = $cout['coutEnergie'];
-        $coutDeuterium = $cout['coutDeuterium'];
+        if (empty($cout['coutMetal'])) {
+            $coutMetal = 0;
+        } else {
+            $coutMetal = $cout['coutMetal'];
+        }
+        if (empty($cout['coutEnergie'])) {
+            $coutEnergie = 0;
+        } else {
+            $coutEnergie = $cout['coutEnergie'];
+        }
+        if (empty($cout['coutDeuterium'])) {
+            $coutDeuterium = 0;
+        } else {
+            $coutDeuterium = $cout['coutDeuterium'];
+        }
+
         echo "le labo est bien niveau 1 ou plus";
         // Vérifier les ressources disponibles
         if (checkRessources($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium)) {
@@ -166,20 +221,18 @@ function upgradeEnergie($idJoueur, $idPlanete) {
             $stmt->execute();
 
             // Mise à jour des ressources du joueur après
-            $query = "UPDATE ressource SET stockMetal = stockMetal - :coutMetal, stockEnergie = stockEnergie - :coutEnergie, stockDeuterium = stockDeuterium - :coutDeuterium WHERE idJoueur = :idJoueur";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindValue(':coutMetal', $coutMetal);
-            $stmt->bindValue(':coutEnergie', $coutEnergie);
-            $stmt->bindValue(':coutDeuterium', $coutDeuterium);
-            $stmt->bindValue(':idJoueur', $idJoueur);
-            $stmt->execute();
+            updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuterium);
+            $_SESSION['good_alert'] = "La recherche a bien été effectuée.";
+            header('Location: ./recherche.php');
         } else {
-            echo "Le joueur ne possède pas suffisamment de ressources pour effectuer la recherche.";
+            $_SESSION['bad_alert'] = "Le joueur ne possède pas les ressources nécessaires pour effectuer la recherche.";
             // renvoyer une erreur
+            header('Location: ./recherche.php');
         }
     } else {
-        echo "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.";
+        $_SESSION['bad_alert'] = "Le joueur ne possède pas le laboratoire nécessaire pour effectuer la recherche.";
         // renvoyer une erreur
+        header('Location: ./recherche.php');
     }
 }
 
@@ -203,6 +256,3 @@ function upgradeEnergie($idJoueur, $idPlanete) {
 // function upgradeArmement() {
     
 // }
-
-
-?>
