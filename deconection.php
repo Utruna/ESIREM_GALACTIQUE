@@ -1,6 +1,7 @@
 <?php
-// Début de la session
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Destruction de toutes les données de session
 session_destroy();

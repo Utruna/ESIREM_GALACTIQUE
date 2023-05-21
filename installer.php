@@ -1,5 +1,7 @@
 <?php
-
+if (!isset($_SESSION)) {
+  session_start();
+}
 
 echo "Début d'installation </br>";
 try {
@@ -157,6 +159,7 @@ CREATE TABLE IF NOT EXISTS flotte (
   id INT NOT NULL AUTO_INCREMENT,
   idPlanete INT NOT NULL,
   idStatFlotte INT NOT NULL,
+  nb_chasseur INT NOT NULL,
   nb_croiseur INT NOT NULL,
   nb_transporteur INT NOT NULL,
   nb_coloniseur INT NOT NULL,
@@ -514,6 +517,18 @@ AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
 ");echo "- Contrainte recherche ions & boulier planete implémanteé </br>";
 
 
+  $pdo->exec("
+INSERT INTO statue_flotte (statutFlotte, description)
+VALUES
+  ('Attend', 'Flotte en attente'),
+  ('Attaque', 'Flotte en phase d\'attaque'),
+  ('Détruite', 'Flotte détruite');
+");echo "- Statue flotte implémanteé </br>";
+
+
+$_SESSION['good_alert'] = "La base de donnée a été initialisé avec succès";
+header('Location: ./acceuille/index.php');
+exit;
 } catch (PDOException $e) {
   echo 'Connexion échouée : ' . $e->getMessage();
   var_dump($e->getMessage());

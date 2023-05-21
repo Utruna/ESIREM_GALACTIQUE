@@ -77,6 +77,8 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                     <!-- <th>Position</th> -->
                     <th>Manager</th>
                     <th>Acquérir</th>
+                    <th>Recherche</th>
+                    <th>Chantier Spatial</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,8 +104,8 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                 <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
                             <?php
                             } else { ?>
-
-                                <button class="attaquer-planete"
+                                <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
+                                <!-- <button class="attaquer-planete"
                         onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
                             Attaquer
                         </button>
@@ -143,7 +145,7 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                         <li></li>
                                     </ul>
                                 </table>
-                            </form>
+                            </form> -->
                             
                         </div>
                             <?php } ?>
@@ -154,7 +156,13 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                 <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
                                     <button type="submit">Rechercher</button><?php } ?>
                             </form>
-
+                        </td>
+                        <td>
+                        <form action="./../ChantierSpatial/chantier.php" method="post">
+                                <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+                                    <button type="submit">Chantier Spatial</button><?php } ?>
+                            </form>
                         </td>
                     </tr>
                 <?php } ?>

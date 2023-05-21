@@ -13,7 +13,7 @@ if (isset($_POST['idPlanete'])) {
     $idPlanete = $_SESSION['idPlanete'];
 }
 
-// =================== RECHERCHE ===================
+// =================== ENERGIE ===================
 if (isset($_SESSION['energie'])) {
     upgradeEnergie($idJoueur, $idPlanete);
 }
@@ -22,6 +22,17 @@ $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauEnergie = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Réucpération des coûts
+$query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_energie'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$cout = $stmt->fetch(PDO::FETCH_ASSOC);
+// var_dump($cout);
+// Récupérer les coûts
+$coutMetalEnergie = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutEnergieEnergie = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
+$coutDeuteriumEnergie = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
 
 // =================== LASER ===================
 if (isset($_SESSION['laser'])) {
@@ -33,6 +44,17 @@ $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauLaser = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Réucpération des coûts
+$query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_laser'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$cout = $stmt->fetch(PDO::FETCH_ASSOC);
+// var_dump($cout);
+// Récupérer les coûts
+$coutMetalLaser = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutEnergieLaser = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
+$coutDeuteriumLaser = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
+
 // =================== IONS ===================
 if (isset($_SESSION['ions'])) {
     upgradeIons($idJoueur, $idPlanete);
@@ -42,6 +64,17 @@ $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauIons = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Réucpération des coûts
+$query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_ions'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$cout = $stmt->fetch(PDO::FETCH_ASSOC);
+// var_dump($cout);
+// Récupérer les coûts
+$coutMetalIons = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutEnergieIons = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
+$coutDeuteriumIons = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
 
 // =================== BOUCLIER ===================
 if (isset($_SESSION['bouclier'])) {
@@ -53,6 +86,17 @@ $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauBouclier = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Réucpération des coûts
+$query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_bouclier'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$cout = $stmt->fetch(PDO::FETCH_ASSOC);
+// var_dump($cout);
+// Récupérer les coûts
+$coutMetalBouclier = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutEnergieBouclier = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
+$coutDeuteriumBouclier = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
+
 // =================== ARMEMENT ===================
 if (isset($_SESSION['armement'])) {
     upgradeArmement($idJoueur, $idPlanete);
@@ -62,6 +106,17 @@ $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Réucpération des coûts
+$query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'armement'";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$cout = $stmt->fetch(PDO::FETCH_ASSOC);
+// var_dump($cout);
+// Récupérer les coûts
+$coutMetalArmement = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutEnergieArmement = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
+$coutDeuteriumArmement = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
 
 ?>
 <!DOCTYPE html>
@@ -81,7 +136,9 @@ $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
             <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
             <h2>Energie</h2>
             <h3>Niveau actuel : <?php echo $niveauEnergie['niveauTechEnergie'] ?>/10</h3>
-            <p class="resource">Deutérium: 2 000</p>
+            <p class="resource">Métal : <?php echo $coutMetalEnergie ?></p>
+            <p class="resource">Energie : <?php echo $coutEnergieEnergie ?></p>
+            <p class="resource">Deutérium : <?php echo $coutDeuteriumEnergie ?></p>
             <p class="resource">Temps de construction : 4 seconde</p>
             <p>Production d’énergie augmenter de 2%</p>
             <input type="text" name="energie" value="true" style="display: none">
@@ -92,9 +149,11 @@ $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
     <div>
         <form action="./laser.php" method="post">
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
-            <h2>laser</h2>
+            <h2>Laser</h2>
             <h3>Niveau actuel : <?php echo $niveauLaser['niveauTechLaser'] ?>/10</h3>
-            <p class="resource">Deutérium: 300</p>
+            <p class="resource">Métal : <?php echo $coutMetalLaser ?></p>
+            <p class="resource">Energie : <?php echo $coutEnergieLaser ?></p>
+            <p class="resource">Deutérium : <?php echo $coutDeuteriumLaser ?></p>
             <p class="resource">Temps de construction : 2 seconde</p>
             <input type="text" name="laser" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
@@ -106,7 +165,9 @@ $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
             <h2>Ions</h2>
             <h3>Niveau actuel : <?php echo $niveauIons['niveauTechIons'] ?>/10</h3>
-            <p class="resource">Deutérium: 500 </p>
+            <p class="resource">Métal : <?php echo $coutMetalIons ?></p>
+            <p class="resource">Energie : <?php echo $coutEnergieIons ?></p>
+            <p class="resource">Deutérium : <?php echo $coutDeuteriumIons ?></p>
             <p class="resource">Temps de construction : 8 seconde</p>
             <input type="text" name="ions" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
@@ -118,7 +179,9 @@ $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
             <h2>Bouclier</h2>
             <h3>Niveau actuel : <?php echo $niveauBouclier['niveauTechBouclier'] ?>/10</h3>
-            <p class="resource">Deutérium: 1000 </p>
+            <p class="resource">Métal : <?php echo $coutMetalBouclier ?></p>
+            <p class="resource">Energie : <?php echo $coutEnergieBouclier ?></p>
+            <p class="resource">Deutérium : <?php echo $coutDeuteriumBouclier ?></p>
             <p class="resource">Temps de construction : 5 seconde</p>
             <input type="text" name="bouclier" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
@@ -128,17 +191,21 @@ $niveauArmement = $stmt->fetch(PDO::FETCH_ASSOC);
     <div>
         <form action="./armement.php" method="post">
             <!-- <img src="./../img/laser.jpg" alt="planete" /> -->
-            <h2>Armee</h2>
+            <h2>Armement</h2>
             <h3>Niveau actuel : <?php echo $niveauArmement['niveauTechArmement'] ?>/10</h3>
-            <p class="resource">Deutérium: 1000 </p>
+            <p class="resource">Métal : <?php echo $coutMetalArmement ?></p>
+            <p class="resource">Energie : <?php echo $coutEnergieArmement ?></p>
+            <p class="resource">Deutérium : <?php echo $coutDeuteriumArmement ?></p>
             <p class="resource">Temps de construction : 5 seconde</p>
             <input type="text" name="armement" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
             <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
         </form>
     </div>
+    <form method="post" action="./../galaxie/galaxie.php">
+        <button type="submit">Retour</button>
+    </form>
 </body>
-
 </html>
 
 <script>
