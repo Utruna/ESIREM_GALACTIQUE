@@ -79,6 +79,7 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                     <th>Acquérir</th>
                     <th>Recherche</th>
                     <th>Chantier Spatial</th>
+                    <th>infrastructure</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,33 +147,40 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                     </ul>
                                 </table>
                             </form> -->
-                            
-                        </div>
-                            <?php } ?>
-                        </td>
-                        <td>
-                            <form action="./../recherche/recherche.php" method="post">
-                                <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                                    <button type="submit">Rechercher</button><?php } ?>
-                            </form>
-                        </td>
-                        <td>
-                        <form action="./../ChantierSpatial/chantier.php" method="post">
-                                <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                                    <button type="submit">Chantier Spatial</button><?php } ?>
-                            </form>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+
     </div>
-    <form method="post" action="./../deconection.php">
-        <button type="submit">Déconnexion</button>
+<?php } ?>
+</td>
+<td>
+    <form action="./../recherche/recherche.php" method="post">
+        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+            <button type="submit">Rechercher</button><?php } ?>
     </form>
-    <?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
+</td>
+<td>
+    <form action="./../ChantierSpatial/chantier.php" method="post">
+        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+            <button type="submit">Chantier Spatial</button><?php } ?>
+    </form>
+</td>
+<td>
+    <form action="./../infrastructure/infrastructure.php" method="post">
+        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+            <button type="submit">Infrastructure</button><?php } ?>
+    </form>
+</td>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+</div>
+<form method="post" action="./../deconection.php">
+    <button type="submit">Déconnexion</button>
+</form>
+<?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
 </body>
 
 <script>
