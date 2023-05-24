@@ -71,15 +71,10 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
         <table>
             <thead>
                 <tr>
-                    <th>Nom de la planète</th>
+                    <th>Planete</th>
                     <th>Joueur</th>
                     <th>Type</th>
-                    <!-- <th>Position</th> -->
-                    <th>Manager</th>
-                    <th>Acquérir</th>
-                    <th>Recherche</th>
-                    <th>Chantier Spatial</th>
-                    <th>infrastructure</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -89,126 +84,70 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                         <td><?php echo $planete['nom']; ?></td>
                         <td><?php echo getJoueur($pdo, $planete['idJoueur'])['nom']; ?></td>
                         <td><?php echo getTypePlanete($pdo, $planete['idType']); ?></td>
-                        <!-- <td><?php echo $planete['position']; ?></td> -->
                         <td>
                             <?php
                             // Si la planète appartient au joueur connecté, affiche un lien vers la page de gestion de la planète
                             if ($planete['idJoueur'] == $_SESSION['idJoueur']) {
-                                echo '<a href="planete.php?planete=' . $planete['id'] . '">Gérer</a>';
-                            } else {
-                                echo 'Non';
-                            }
                             ?>
-                        </td>
-                        <td>
-                            <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                                <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
-                            <?php
-                            } else { ?>
-                                <button class="acquerir-planete" data-id-planete="<?php echo $planete['id']; ?>">Acquérir</button>
-                                <!-- <button class="attaquer-planete"
-                        onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
-                            Attaquer
-                        </button>
-                        <div style="display: none" id="attaque-<?php echo $planete['id']; ?>">
-                            <form action="attaquer">
-                                <input type="text" name="id-planete" value="<?php echo $planete['id']; ?>">
-                                <table>
-                                    <ul>
-                                        <li>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                            <label for="flot-1">Chassseur</label>
-                                            <input name="flot-1" type="number">
-                                        </li>                                        <li>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                            <label for="flot-1">Chassseur</label>
-                                            <input name="flot-1" type="number">
-                                        </li>                                        <li>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                            <label for="flot-1">Chassseur</label>
-                                            <input name="flot-1" type="number">
-                                        </li>                                        <li>
-                                            <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                            <label for="flot-1">Chassseur</label>
-                                            <input name="flot-1" type="number">
-                                        </li>
-                                    </ul>
-                                    <ul>
-                                        <li></li>
-                                        <li>
-                                            <button type="submit"> Attaquer</button>
-                                        </li>
-                                        <li>
-                                            <button type="button"
-                                                    onclick="this.display = 'none'"
-                                            > Annuler</button>
-                                        </li>
-                                        <li></li>
-                                    </ul>
-                                </table>
-                            </form> -->
-
+                                <form action="./manager.php" method="post">
+                                    <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                    <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+                                        <button type="submit">Manager</button><?php } ?>
+                                </form>
+                            <?php } else {
+                            ?>
+                                <button class="attaquer-planete" onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
+                                    Attaquer
+                                </button>
+                                <div style="display: none" id="attaque-<?php echo $planete['id']; ?>">
+                                    <form action="attaquer">
+                                        <input type="text" name="id-planete" value="<?php echo $planete['id']; ?>">
+                                        <table>
+                                            <ul>
+                                                <li>
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Chassseur</label>
+                                                    <input name="flot-1" type="number">
+                                                </li>
+                                                <li>
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Chassseur</label>
+                                                    <input name="flot-1" type="number">
+                                                </li>
+                                                <li>
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Chassseur</label>
+                                                    <input name="flot-1" type="number">
+                                                </li>
+                                                <li>
+                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Chassseur</label>
+                                                    <input name="flot-1" type="number">
+                                                </li>
+                                            </ul>
+                                            <ul>
+                                                <li></li>
+                                                <li>
+                                                    <button type="submit"> Attaquer</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" onclick="this.display = 'none'"> Annuler</button>
+                                                </li>
+                                                <li></li>
+                                            </ul>
+                                        </table>
+                                    </form>
+                                </div>
+                            <?php } ?>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
     </div>
-<?php } ?>
-</td>
-<td>
-    <form action="./../recherche/recherche.php" method="post">
-        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-            <button type="submit">Rechercher</button><?php } ?>
+    <form method="post" action="./../deconection.php">
+        <button type="submit">Déconnexion</button>
     </form>
-</td>
-<td>
-    <form action="./../ChantierSpatial/chantier.php" method="post">
-        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-            <button type="submit">Chantier Spatial</button><?php } ?>
-    </form>
-</td>
-<td>
-    <form action="./../infrastructure/infrastructure.php" method="post">
-        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-        <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-            <button type="submit">Infrastructure</button><?php } ?>
-    </form>
-</td>
-</tr>
-<?php } ?>
-</tbody>
-</table>
-</div>
-<form method="post" action="./../deconection.php">
-    <button type="submit">Déconnexion</button>
-</form>
-<?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
+    <?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
 </body>
-
-<script>
-    // Récupération de tous les boutons d'acquisition de planète
-    var acquerirPlaneteButtons = document.getElementsByClassName('acquerir-planete');
-
-    // Parcourir tous les boutons et ajouter un gestionnaire d'événements à chacun
-    for (var i = 0; i < acquerirPlaneteButtons.length; i++) {
-        acquerirPlaneteButtons[i].addEventListener('click', function(event) {
-            event.preventDefault(); // Empêche le comportement par défaut du bouton (rechargement de la page)
-
-            // Récupération de l'ID de la planète à partir de l'attribut personnalisé
-            var idPlanete = this.getAttribute('data-id-planete');
-
-            // Envoi de la requête AJAX au serveur
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'aquerire_planete.php', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText); // Affiche la réponse dans la console du navigateur
-                    // Rechargement de la page
-                    location.reload();
-                }
-            };
-            xhr.send('idPlanete=' + encodeURIComponent(idPlanete));
-        });
-    }
-</script>
 
 </html>

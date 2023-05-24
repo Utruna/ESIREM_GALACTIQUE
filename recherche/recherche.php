@@ -202,47 +202,8 @@ $coutDeuteriumArmement = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium']
             <button type="submit" name="boutonIons" data-delai="4">Rechercher</button>
         </form>
     </div>
-    <form method="post" action="./../galaxie/galaxie.php">
+    <form method="post" action="./../galaxie/manager.php">
         <button type="submit">Retour</button>
     </form>
 </body>
 </html>
-
-<script>
-    // $(document).ready(function() {
-    //     $('button[name="bouton"]').click(function() {
-    //         var bouton = $(this); // Stockez une référence au bouton cliqué
-    //
-    //         bouton.prop('disabled', true); // Désactivez le bouton pendant le délai
-    //
-    //         // Récupérez la durée du délai à partir de l'attribut data-delai
-    //         var delai = parseInt(bouton.data('delai'));
-    //
-    //         // Affichez un message d'attente
-    //         alert('Recherche en cours. Veuillez patienter...');
-    //
-    //         //  On effectue la recherch ene utilisant ajax
-    //         $.ajax({
-    //             url: 'fonction.php',
-    //             type: 'POST',
-    //             dataType: 'json',
-    //             success: function(response) {
-    //                 if (response.result) {
-    //                     alert('Les recherches nécessaires sont satisfaites.');
-    //                     // Effectuez d'autres actions si nécessaire
-    //                 } else {
-    //                     alert('Les recherches nécessaires ne sont pas satisfaites.');
-    //                     // Effectuez d'autres actions si nécessaire
-    //                 }
-    //             },
-    //             error: function() {
-    //                 alert('Une erreur s\'est produite lors de la vérification des recherches.');
-    //                 // Gérez l'erreur si nécessaire
-    //             },
-    //             complete: function() {
-    //                 bouton.prop('disabled', false); // Réactivez le bouton après la recherche
-    //             }
-    //         });
-    //     });
-    // });
-</script>

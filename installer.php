@@ -335,6 +335,7 @@ CREATE TABLE IF NOT EXISTS infrastructure (
   niveauChantierSpatial INT NOT NULL,
   niveauUsineNanite INT NOT NULL,
   niveauUsineMetal INT NOT NULL,
+  niveauSynthetiseurDeut INT NOT NULL,
   niveauCentraleSolaire INT NOT NULL,
   niveauCentraleFusion INT NOT NULL,
   niveauArtillerieLaser INT NOT NULL,
@@ -415,6 +416,9 @@ INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmenta
   (\'synthetiseur_de_deuterium\', 200, 50, 0, 0),
   (\'centrale_solaire\', 150, 0, 20, 0),
   (\'centrale_a_fusion\', 5000, 2000, 0, 0);
+  (\'artillerie_laser\', 1500, 0, 300, 0),
+  (\'cannon_a_ions\', 5000, 0, 1000, 0),
+  (\'bouclier\', 1000, 1000, 5000, 0);
 ');echo "- Cout implémanteé </br>";
 
   $pdo->exec('INSERT INTO type_vaisseau(nom) VALUES 

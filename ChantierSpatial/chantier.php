@@ -150,7 +150,7 @@ $coutDeuteriumColo = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0
             <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
         </form>
     </div>
-    <form method="post" action="./../galaxie/galaxie.php">
+    <form method="post" action="./../galaxie/manager.php">
         <button type="submit">Retour</button>
     </form>
 </body>
