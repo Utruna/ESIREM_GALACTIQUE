@@ -1,4 +1,3 @@
+avant lancement du jeu lancer l'installer qui mettera a jour la base de donnée/installera la base de donnée.
+Le mots de passe ainsi que l'identifiant de la base de donnée sont root et '' (rien) par défaut.
 
-avant lancement du jeu si la bdd ne fonctionne pas ou n'est pas installer lancer l'installer qui vas mettre en place la bdd.
-
-pour lancer la page d'acceuille aller sur /acceuille/index.php

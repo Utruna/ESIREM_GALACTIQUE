@@ -9,6 +9,10 @@ include "./../univers/alert.php";
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 
 $idPlanete = $_SESSION['idPlanete'];
+$stmt = $pdo->prepare("SELECT * FROM planete WHERE id = :idPlanete");
+$stmt->bindValue(':idPlanete', $idPlanete);
+$stmt->execute();
+$planete = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -21,6 +25,7 @@ $idPlanete = $_SESSION['idPlanete'];
 </head>
 
 <body>
+<h2>Vous êtes sur la Planete : <?php echo $planete['nom']; ?></h2>
     <form action="./../recherche/recherche.php" method="post">
         <input type="hidden" name="idPlanete" value="<?php echo $idPlanete; ?>">
             <button type="submit">Rechercher</button>
