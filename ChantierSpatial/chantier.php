@@ -80,9 +80,9 @@ $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE i
 $stmt = $pdo->prepare($query);
 $stmt->execute(array(':idJoueur' => $idJoueur, ':idUnivers' => $idUnivers));
 $ressource = $stmt->fetch(PDO::FETCH_ASSOC);
-$ressource['metal'] = !empty($ressource['metal']) ? $ressource['metal'] : 0;
-$ressource['energie'] = !empty($ressource['energie']) ? $ressource['energie'] : 0;
-$ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuterium'] : 0;
+$ressource['metal'] = !empty($ressource['stockMetal']) ? $ressource['stockMetal'] : 0;
+$ressource['energie'] = !empty($ressource['stockEnergie']) ? $ressource['stockEnergie'] : 0;
+$ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['stockDeuterium'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +97,7 @@ $ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuteriu
 <body>
     <div>
         <form action="./chasseur.php" method="post">
-            <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
+            <img src="./../img/chasseur.png" style="width:5%" alt="">
             <h2>Chasseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_chasseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalChasseur ?></p>
@@ -113,7 +113,7 @@ $ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuteriu
     </div>
     <div>
         <form action="./croiseur.php" method="post">
-            <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
+            <img src="./../img/croiseur.png" style="width:5%" alt="">
             <h2>Croiseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_croiseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalCroiseur ?></p>
@@ -129,7 +129,7 @@ $ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuteriu
     </div>
     <div>
         <form action="./transporteur.php" method="post">
-            <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
+            <img src="./../img/transporteur.png" style="width:5%" alt="">
             <h2>Transporteur</h2>
             <h3>Disponible : <?php echo $flotte['nb_transporteur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalTransporteur ?></p>
@@ -145,7 +145,7 @@ $ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuteriu
     </div>
     <div>
         <form action="./coloniseur.php" method="post">
-            <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
+            <img src="./../img/coloniseur.png" style="width:5%" alt="">
             <h2>Coloniseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_coloniseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalColo ?></p>

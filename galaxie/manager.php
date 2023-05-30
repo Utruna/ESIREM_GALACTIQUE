@@ -18,15 +18,25 @@ else if(isset($_SESSION['idPlanete'])){
 else{
     header ('Location: ./galaxie.php');
 }
+$idUnivers = $_SESSION['idUnivers'];
+$idJoueur = $_SESSION['idJoueur'];
+
 // var_dump($idPlanete);
 // =================== RESSOURCE JOUEUR ===================
 $query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";   
 $stmt = $pdo->prepare($query);
 $stmt->execute(array(':idJoueur' => $idJoueur,':idUnivers' => $idUnivers));
 $ressource = $stmt->fetch(PDO::FETCH_ASSOC);
-$ressource['metal'] = !empty($ressource['metal']) ? $ressource['metal'] : 0;
-$ressource['energie'] = !empty($ressource['energie']) ? $ressource['energie'] : 0;
-$ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuterium'] : 0;
+$ressource['metal'] = !empty($ressource['stockMetal']) ? $ressource['stockMetal'] : 0;
+$ressource['energie'] = !empty($ressource['stockEnergie']) ? $ressource['stockEnergie'] : 0;
+$ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['stockDeuterium'] : 0;
+
+// =================== PLANETE ===================
+$query = "SELECT * FROM planete WHERE id = :idPlanete";
+$stmt = $pdo->prepare($query);
+$stmt->execute(array(':idPlanete' => $idPlanete));
+$planete = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 
 ?>

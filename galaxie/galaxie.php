@@ -91,15 +91,14 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                             ?>
                                 <form action="./manager.php" method="post">
                                     <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                    <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
-                                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                        <button type="submit">Manager</button><?php } ?>
+                                        <button type="submit">Manager</button>
                                 </form>
+
                             <?php } else {
                             ?>
                                 <div>
-                                    <form action="./aquerire_planete.php" form="post">
-                                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                    <form action="./aquerire_planete.php" method="post">
+                                    <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
                                         <button type="submit">Aquerire</button>
                                     </form>
                                 </div>
@@ -112,23 +111,23 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                         <table>
                                             <ul>
                                                 <li>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
+                                                    <img src="./../img/chasseur.png" style="width:25%" alt="">
                                                     <label for="flot-1">Chassseur</label>
                                                     <input name="flot-1" type="number">
                                                 </li>
                                                 <li>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Chassseur</label>
+                                                    <img src="./../img/croiseur.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Croiseur</label>
                                                     <input name="flot-1" type="number">
                                                 </li>
                                                 <li>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Chassseur</label>
+                                                    <img src="./../img/transporteur.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Transporteur</label>
                                                     <input name="flot-1" type="number">
                                                 </li>
                                                 <li>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/5219/5219396.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Chassseur</label>
+                                                    <img src="./../img/coloniseur.png" style="width:25%" alt="">
+                                                    <label for="flot-1">Coloniseur</label>
                                                     <input name="flot-1" type="number">
                                                 </li>
                                             </ul>
