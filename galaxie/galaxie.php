@@ -92,11 +92,18 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                 <form action="./manager.php" method="post">
                                     <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
                                     <?php if ($planete['idJoueur'] == $_SESSION['idJoueur']) { ?>
+                                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
                                         <button type="submit">Manager</button><?php } ?>
                                 </form>
                             <?php } else {
                             ?>
-                                <button class="attaquer-planete" onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
+                                <div>
+                                    <form action="./aquerire_planete.php" form="post">
+                                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                        <button type="submit">Aquerire</button>
+                                    </form>
+                                </div>
+                                <!-- <button class="attaquer-planete" onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
                                     Attaquer
                                 </button>
                                 <div style="display: none" id="attaque-<?php echo $planete['id']; ?>">
@@ -137,7 +144,7 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                                             </ul>
                                         </table>
                                     </form>
-                                </div>
+                                </div> -->
                             <?php } ?>
                     </tr>
                 <?php } ?>

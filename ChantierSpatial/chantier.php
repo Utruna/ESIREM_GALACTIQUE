@@ -70,10 +70,19 @@ $stmt->execute();
 $cout = $stmt->fetch(PDO::FETCH_ASSOC);
 // var_dump($cout);
 // Récupérer les coûts
-$coutMetalColo= !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
+$coutMetalColo = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
 $coutEnergieColo = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
 $coutDeuteriumColo = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
 
+
+// =================== RESSOURCE JOUEUR ===================
+$query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";
+$stmt = $pdo->prepare($query);
+$stmt->execute(array(':idJoueur' => $idJoueur, ':idUnivers' => $idUnivers));
+$ressource = $stmt->fetch(PDO::FETCH_ASSOC);
+$ressource['metal'] = !empty($ressource['metal']) ? $ressource['metal'] : 0;
+$ressource['energie'] = !empty($ressource['energie']) ? $ressource['energie'] : 0;
+$ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuterium'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -135,9 +144,9 @@ $coutDeuteriumColo = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0
         </form>
     </div>
     <div>
-    <form action="./coloniseur.php" method="post">
+        <form action="./coloniseur.php" method="post">
             <!-- <img src="./../img/energie.jpg" alt="planete" /> -->
-            <h2>coloniseur</h2>
+            <h2>Coloniseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_coloniseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalColo ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieColo ?></p>
@@ -149,6 +158,12 @@ $coutDeuteriumColo = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
             <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
         </form>
+    </div>
+    <div>
+        <h2>Ressource Joueur</h2>
+        <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
+        <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
+        <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
     </div>
     <form method="post" action="./../galaxie/manager.php">
         <button type="submit">Retour</button>

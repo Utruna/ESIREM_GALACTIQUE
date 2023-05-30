@@ -22,12 +22,16 @@ $stmt = $pdo->prepare($query);
 $stmt->bindValue(':idPlanete', $idPlanete);
 $stmt->execute();
 $niveauEnergie = $stmt->fetch(PDO::FETCH_ASSOC);
+if($niveauEnergie['niveauTechEnergie']){
+
+}
 
 // Réucpération des coûts
 $query = "SELECT coutMetal, coutEnergie, coutDeuterium FROM cout WHERE structureType = 'recherche_energie'";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 $cout = $stmt->fetch(PDO::FETCH_ASSOC);
+
 // var_dump($cout);
 // Récupérer les coûts
 $coutMetalEnergie = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;

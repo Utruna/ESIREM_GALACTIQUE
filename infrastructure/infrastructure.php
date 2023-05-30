@@ -12,7 +12,7 @@ if (isset($_POST['idPlanete'])) {
 } else {
     $idPlanete = $_SESSION['idPlanete'];
 }
-
+$idUnivers = $_SESSION['idUnivers'];
 
 $query = "SELECT * FROM infrastructure WHERE idPlanete = :idPlanete";
 $stmt = $pdo->prepare($query);
@@ -124,8 +124,14 @@ $coutMetalCentraleFusion = !empty($cout['coutMetal']) ? $cout['coutMetal'] : 0;
 $coutEnergieCentraleFusion  = !empty($cout['coutEnergie']) ? $cout['coutEnergie'] : 0;
 $coutDeuteriumCentraleFusion  = !empty($cout['coutDeuterium']) ? $cout['coutDeuterium'] : 0;
 
-
-
+// =================== RESSOURCE JOUEUR ===================
+$query = "SELECT stockMetal, stockEnergie, stockDeuterium FROM ressource WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";   
+$stmt = $pdo->prepare($query);
+$stmt->execute(array(':idJoueur' => $idJoueur,':idUnivers' => $idUnivers));
+$ressource = $stmt->fetch(PDO::FETCH_ASSOC);
+$ressource['metal'] = !empty($ressource['metal']) ? $ressource['metal'] : 0;
+$ressource['energie'] = !empty($ressource['energie']) ? $ressource['energie'] : 0;
+$ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuterium'] : 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -228,6 +234,12 @@ $coutDeuteriumCentraleFusion  = !empty($cout['coutDeuterium']) ? $cout['coutDeut
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
             <button type="submit" name="boutonFusion" data-delai="4">Construire</button>
         </form>
+    </div>
+    <div>
+        <h2>Ressource Joueur</h2>
+        <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
+        <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
+        <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
     </div>
     <form method="post" action="./../galaxie/manager.php">
         <button type="submit">Retour</button>

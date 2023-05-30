@@ -4,12 +4,12 @@ if (!isset($_SESSION)) {
 }
 // Inclure le fichier des fonctions
 include 'functions.php';
-
 // Vérifier si l'ID de la planète a été envoyé
 if (isset($_POST['idPlanete'])) {
     // Récupérer l'ID de la planète depuis la requête AJAX
     $idPlanete = $_POST['idPlanete'];
-
+    $idPlanete = !empty($idPlanete) ? $idPlanete : 0;
+    echo $idPlanete;
     // Appeler la fonction acquerirPlanete avec l'ID de la planète
     $stmt = $pdo->prepare('UPDATE planete SET idJoueur = :idJoueur WHERE id = :idPlanete');
     $stmt->execute(['idJoueur' => $_SESSION['idJoueur'], 'idPlanete' => $idPlanete]);
@@ -40,6 +40,6 @@ if (isset($_POST['idPlanete'])) {
     $stmt->bindParam(':idStatFlotte', $idStatFlotte, PDO::PARAM_INT);
 
     // Renvoyer vers la page de selection de galaxie
-    $_SESSION['good_alert'] = "Planete aquise !";
+    $_SESSION['good_alert'] = "Infrastructure créée !";
     header('Location: ./galaxie.php');
 }
