@@ -40,6 +40,7 @@ $ressource['deuterium'] = !empty($ressource['deuterium']) ? $ressource['deuteriu
 </head>
 
 <body>
+<h2>Vous êtes sur la Planete : <?php echo $planete['nom']; ?></h2>
     <form action="./../recherche/recherche.php" method="post">
         <input type="hidden" name="idPlanete" value="<?php echo $idPlanete; ?>">
             <button type="submit">Rechercher</button>

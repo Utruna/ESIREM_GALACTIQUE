@@ -154,7 +154,6 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
     <form method="post" action="./../deconection.php">
         <button type="submit">Déconnexion</button>
     </form>
-    <?php echo '<a href="./../flotte/flotte.php">gestion flotte</a>' ?>
 </body>
 
 </html>
