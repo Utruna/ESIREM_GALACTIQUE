@@ -29,6 +29,13 @@ $systemeSolaireId = $_GET['systeme-solaire'] ?? $systemesSolaire[0]["id"];
 // Récupération des planètes du système solaire choisi
 $planetes = getPlanetes($pdo, $systemeSolaireId);
 
+// Liste planete du joueur
+$planeteJoueur = getPlaneteJoueur($pdo, $_SESSION['idJoueur'], $idUnivers);
+
+// Récupération information flotte 
+$flotte = getFlotte($pdo, $_SESSION['idJoueur']);
+
+//var_dump($planeteJoueur);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +44,8 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
 <head>
     <meta charset="utf-8" />
     <title>Page de gestion des planetes</title>
-    <link rel="stylesheet" href="../style/css_index.css" />
+    <!-- <link rel="stylesheet" href="../style/css_index.css" /> -->
+    <link rel="stylesheet" href="../style/popupGalaxie.css" />
 </head>
 
 <body>
@@ -91,59 +99,76 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
                             ?>
                                 <form action="./manager.php" method="post">
                                     <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                        <button type="submit">Manager</button>
+                                    <button type="submit">Manager</button>
                                 </form>
 
                             <?php } else {
                             ?>
-                                <div>
+                            <!-- ================ AQUERIRE = TRICHE ================ -->
+                                <!-- <div>
                                     <form action="./aquerire_planete.php" method="post">
-                                    <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
+                                        <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
                                         <button type="submit">Aquerire</button>
                                     </form>
-                                </div>
-                                <!-- <button class="attaquer-planete" onclick="document.getElementById('attaque-<?php echo $planete["id"]; ?>').style.display = 'block'">
+                                </div> -->
+
+                                <button class="attaquer-planete" data-planete-id="<?php echo $planete['id']; ?>">
                                     Attaquer
                                 </button>
-                                <div style="display: none" id="attaque-<?php echo $planete['id']; ?>">
-                                    <form action="attaquer">
-                                        <input type="text" name="id-planete" value="<?php echo $planete['id']; ?>">
-                                        <table>
-                                            <ul>
-                                                <li>
-                                                    <img src="./../img/chasseur.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Chassseur</label>
-                                                    <input name="flot-1" type="number">
-                                                </li>
-                                                <li>
-                                                    <img src="./../img/croiseur.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Croiseur</label>
-                                                    <input name="flot-1" type="number">
-                                                </li>
-                                                <li>
-                                                    <img src="./../img/transporteur.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Transporteur</label>
-                                                    <input name="flot-1" type="number">
-                                                </li>
-                                                <li>
-                                                    <img src="./../img/coloniseur.png" style="width:25%" alt="">
-                                                    <label for="flot-1">Coloniseur</label>
-                                                    <input name="flot-1" type="number">
-                                                </li>
-                                            </ul>
-                                            <ul>
-                                                <li></li>
-                                                <li>
-                                                    <button type="submit"> Attaquer</button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" onclick="this.display = 'none'"> Annuler</button>
-                                                </li>
-                                                <li></li>
-                                            </ul>
-                                        </table>
-                                    </form>
-                                </div> -->
+
+                                <div id="dialog-<?php echo $planete['id']; ?>" class="dialog-overlay">
+                                    <div class="dialog-box">
+                                        <form action="attaquer">
+                                            Vous voulez attaquer la planete : <?php echo $planete['nom']; ?>
+                                            Selectionner la planete avec laquel vous voulez attaquer :
+                                            <input type="hidden" name="planeteAttaquee" value="<?php echo $planete['id']; ?>">
+                                            <select name="planeteAttaquante">
+                                                <?php foreach ($planeteJoueur as $planeteJ) { ?>
+                                                    <option value="<?php echo $planeteJ['id']; ?>"><?php echo $planeteJ['nom']; ?></option>
+                                                <?php } ?>
+                                            </select>
+
+                                            <table>
+                                                <ul>
+                                                    <li>
+                                                        <img src="./../img/chasseur.png" style="width:25%" alt="">
+                                                        <label for="flot-1">Chassseur</label>
+                                                        <input name="flot-1" type="number">
+                                                        Chasseur disponible : <?php echo $flotte['nb_chasseur']; ?>
+                                                    </li>
+                                                    <li>
+                                                        <img src="./../img/croiseur.png" style="width:25%" alt="">
+                                                        <label for="flot-1">Croiseur</label>
+                                                        <input name="flot-1" type="number">
+                                                        Croisuer disponible : <?php echo $flotte['nb_croiseur']; ?>
+                                                    </li>
+                                                    <li>
+                                                        <img src="./../img/transporteur.png" style="width:25%" alt="">
+                                                        <label for="flot-1">Transporteur</label>
+                                                        <input name="flot-1" type="number">
+                                                        Transporteur disponible : <?php echo $flotte['nb_transporteur']; ?>
+                                                    </li>
+                                                    <li>
+                                                        <img src="./../img/coloniseur.png" style="width:25%" alt="">
+                                                        <label for="flot-1">Coloniseur</label>
+                                                        <input name="flot-1" type="number">
+                                                        Coloniseur disponible : <?php echo $flotte['nb_coloniseur']; ?>
+                                                    </li>
+                                                </ul>
+                                                <ul>
+                                                    <li></li>
+                                                    <li>
+                                                        <button type="submit"> Attaquer</button>
+                                                    </li>
+                                                    <li>
+                                                        <button class="dialog-close" type="button" onclick="closeDialog('<?php echo $planete['id']; ?>')" data-planete-id="<?php echo $planete['id']; ?>"> Annuler</button>
+                                                    </li>
+                                                    <li></li>
+                                                </ul>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
                             <?php } ?>
                     </tr>
                 <?php } ?>
@@ -153,6 +178,43 @@ $planetes = getPlanetes($pdo, $systemeSolaireId);
     <form method="post" action="./../deconection.php">
         <button type="submit">Déconnexion</button>
     </form>
+
+    <script>
+        function openDialog(dialogId) {
+            var dialog = document.getElementById(dialogId);
+            dialog.style.display = 'flex';
+        }
+
+        function closeDialog(dialogId) {
+            var dialog = document.getElementById(dialogId);
+            dialog.style.display = 'none';
+        }
+
+        function initDialogButtons() {
+            var buttons = document.getElementsByClassName('attaquer-planete');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].addEventListener('click', function() {
+                    var planeteId = this.getAttribute('data-planete-id');
+                    openDialog('dialog-' + planeteId);
+                });
+            }
+        }
+
+        function initCloseButtons() {
+            var closeButtons = document.getElementsByClassName('dialog-close');
+            for (var i = 0; i < closeButtons.length; i++) {
+                closeButtons[i].addEventListener('click', function() {
+                    var planeteId = this.getAttribute('data-planete-id');
+                    closeDialog('dialog-' + planeteId);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initDialogButtons();
+            initCloseButtons();
+        });
+    </script>
 </body>
 
 </html>

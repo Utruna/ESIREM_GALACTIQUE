@@ -7,7 +7,7 @@ echo "Début d'installation </br>";
 try {
   // Connexion à MySQL avec PDO
   $pdo = new PDO('mysql:host=localhost;', 'root', '');
-
+  $_SESSION['pdo'] = $pdo;
   // Option pour afficher les erreurs SQL
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

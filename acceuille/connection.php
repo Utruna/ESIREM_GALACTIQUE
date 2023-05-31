@@ -2,6 +2,7 @@
 if (!isset($_SESSION)) {
 	session_start();
 }
+
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 
 if (isset($_POST['email']) && isset($_POST['password'])) {

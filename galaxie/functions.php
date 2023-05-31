@@ -56,7 +56,33 @@ function getTypePlanete($pdo, $typeId) {
     return $result['nom'];
 }
 
+function getFlotte($pdo, $planeteId) {
+    $stmt = $pdo->prepare('SELECT * FROM flotte WHERE idPlanete = :idPlanete');
+    $stmt->execute(['idPlanete' => $planeteId]);
+    $flotte = $stmt->fetchAll();
+    return $flotte;
+}
 
-
+function getPlaneteJoueur($pdo, $idJoueur, $idUnivers) {
+    // récupération des galaxie de l'univers actuel 
+    $stmt = $pdo->prepare('SELECT * FROM galaxie WHERE idUnivers = :idUnivers');
+    $stmt->execute(['idUnivers' => $idUnivers]);
+    $galaxies = $stmt->fetchAll();
+    // récupération des systèmes solaires de chaque galaxie
+    $systemesSolaire = [];
+    foreach ($galaxies as $galaxie) {
+        $stmt = $pdo->prepare('SELECT * FROM systeme_solaire WHERE idGalaxie = :idGalaxie');
+        $stmt->execute(['idGalaxie' => $galaxie['id']]);
+        $systemesSolaire = array_merge($systemesSolaire, $stmt->fetchAll());
+    }
+    // récupération des planètes de chaque système solaire
+    $planetes = [];
+    foreach ($systemesSolaire as $systemeSolaire) {
+        $stmt = $pdo->prepare('SELECT * FROM planete WHERE idSystemeSolaire = :idSystemeSolaire AND idJoueur = :idJoueur');
+        $stmt->execute(['idSystemeSolaire' => $systemeSolaire['id'], 'idJoueur' => $idJoueur]);
+        $planetes = array_merge($planetes, $stmt->fetchAll());
+    }
+    return $planetes;
+}
 
 ?>
