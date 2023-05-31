@@ -104,7 +104,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
 
                             <?php } else {
                             ?>
-                            <!-- ================ AQUERIRE = TRICHE ================ -->
+                                <!-- ================ AQUERIRE = TRICHE ================ -->
                                 <!-- <div>
                                     <form action="./aquerire_planete.php" method="post">
                                         <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
@@ -122,7 +122,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                             Vous voulez attaquer la planete : <?php echo $planete['nom']; ?>
                                             Selectionner la planete avec laquel vous voulez attaquer :
                                             <input type="hidden" name="planeteAttaquee" value="<?php echo $planete['id']; ?>">
-                                            <select name="planeteAttaquante">
+                                            <select name="planeteAttaquante" onchange="getFlotteInfo(this.value)">
                                                 <?php foreach ($planeteJoueur as $planeteJ) { ?>
                                                     <option value="<?php echo $planeteJ['id']; ?>"><?php echo $planeteJ['nom']; ?></option>
                                                 <?php } ?>

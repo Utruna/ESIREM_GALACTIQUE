@@ -47,10 +47,18 @@ $planete = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta charset="utf-8" />
     <title>Page de gestion des planetes</title>
     <link rel="stylesheet" href="../style/css_index.css" />
+    <link rel="stylesheet" href="../style/alert.css" />
 </head>
 
 <body>
 <h2>Vous êtes sur la Planete : <?php echo $planete['nom']; ?></h2>
+modification nom de la planete :
+<form action="./../galaxie/modif.php" method="post">
+    <input type="text" name="nomPlanete" value="<?php echo $planete['nom']; ?>">
+    <input type="hidden" name="idPlanete" value="<?php echo $idPlanete; ?>">
+    <button type="submit">Modifier</button>
+</form>
+
     <form action="./../recherche/recherche.php" method="post">
         <input type="hidden" name="idPlanete" value="<?php echo $idPlanete; ?>">
             <button type="submit">Rechercher</button>

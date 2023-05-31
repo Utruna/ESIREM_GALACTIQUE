@@ -398,28 +398,28 @@ CREATE TABLE IF NOT EXISTS bouclier (
   $pdo->exec('INSERT INTO type_planete (nom) VALUES ("banale"), ("aquatique"), ("tellurique")');
   echo "- Type planete implémanteé </br>";
 
-  $pdo->exec('
+  $pdo->exec("
 INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmentationParNiveau) VALUES
-  (\'recherche_energie\', 0, 0, 100, 2),
-  (\'recherche_laser\', 0, 0, 300, 0),
-  (\'recherche_ions\', 0, 0, 500, 0),
-  (\'recherche_bouclier\', 0, 0, 1000, 5),
-  (\'armement\', 500, 0, 200, 3),
-  (\'chasseur\', 3000, 0, 500, 0),
-  (\'croiseur\', 20000, 0, 5000, 0),
-  (\'transporteur\', 6000, 0, 1500, 0),
-  (\'vaisseau_de_colonisation\', 10000, 0, 10000, 0),
-  (\'laboratoire_de_recherche\', 1000, 500, 0, 0),
-  (\'chantier_spatial\', 500, 500, 0, 0),
-  (\'usine_de_nanites\', 10000, 5000, 0, 0),
-  (\'mine_de_metal\', 100, 10, 0, 0),
-  (\'synthetiseur_de_deuterium\', 200, 50, 0, 0),
-  (\'centrale_solaire\', 150, 0, 20, 0),
-  (\'centrale_a_fusion\', 5000, 2000, 0, 0);
-  (\'artillerie_laser\', 1500, 0, 300, 0),
-  (\'cannon_a_ions\', 5000, 0, 1000, 0),
-  (\'bouclier\', 1000, 1000, 5000, 0);
-');echo "- Cout implémanteé </br>";
+  ('recherche_energie', 0, 0, 100, 2),
+  ('recherche_laser', 0, 0, 300, 0),
+  ('recherche_ions'', 0, 0, 500, 0),
+  ('recherche_bouclier', 0, 0, 1000, 5),
+  ('armement', 500, 0, 200, 3),
+  ('chasseur', 3000, 0, 500, 0),
+  ('croiseur', 20000, 0, 5000, 0),
+  ('transporteur', 6000, 0, 1500, 0),
+  ('vaisseau_de_colonisation', 10000, 0, 10000, 0),
+  ('laboratoire_de_recherche', 1000, 500, 0, 0),
+  ('chantier_spatial', 500, 500, 0, 0),
+  ('usine_de_nanites', 10000, 5000, 0, 0),
+  ('mine_de_metal', 100, 10, 0, 0),
+  ('synthetiseur_de_deuterium', 200, 50, 0, 0),
+  ('centrale_solaire', 150, 0, 20, 0),
+  ('centrale_a_fusion', 5000, 2000, 0, 0),
+  ('artillerie_laser', 1500, 0, 300, 0),
+  ('cannon_a_ions', 5000, 0, 1000, 0),
+  ('bouclier', 1000, 1000, 5000, 0);
+");echo "- Cout implémanteé </br>";
 
   $pdo->exec('INSERT INTO type_vaisseau(nom) VALUES 
                         ("Chasseur"),
