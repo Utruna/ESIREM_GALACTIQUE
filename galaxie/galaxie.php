@@ -4,6 +4,7 @@ if (!isset($_SESSION)) {
 }
 
 include 'functions.php';
+include 'get_flotte.php';
 include "./../univers/alert.php";
 // Connexion à MySQL avec PDO
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
@@ -102,8 +103,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                     <button type="submit">Manager</button>
                                 </form>
 
-                            <?php } else {
-                            ?>
+                            <?php } else { ?>
                                 <!-- ================ AQUERIRE = TRICHE ================ -->
                                 <!-- <div>
                                     <form action="./aquerire_planete.php" method="post">
@@ -123,6 +123,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                             Selectionner la planete avec laquel vous voulez attaquer :
                                             <input type="hidden" name="planeteAttaquee" value="<?php echo $planete['id']; ?>">
                                             <select name="planeteAttaquante" onchange="getFlotteInfo(this.value)">
+
                                                 <?php foreach ($planeteJoueur as $planeteJ) { ?>
                                                     <option value="<?php echo $planeteJ['id']; ?>"><?php echo $planeteJ['nom']; ?></option>
                                                 <?php } ?>
@@ -169,6 +170,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                         </form>
                                     </div>
                                 </div>
+
                             <?php } ?>
                     </tr>
                 <?php } ?>
@@ -209,7 +211,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                 });
             }
         }
-
+        
         document.addEventListener('DOMContentLoaded', function() {
             initDialogButtons();
             initCloseButtons();

@@ -56,12 +56,6 @@ function getTypePlanete($pdo, $typeId) {
     return $result['nom'];
 }
 
-function getFlotte($pdo, $planeteId) {
-    $stmt = $pdo->prepare('SELECT * FROM flotte WHERE idPlanete = :idPlanete');
-    $stmt->execute(['idPlanete' => $planeteId]);
-    $flotte = $stmt->fetchAll();
-    return $flotte;
-}
 
 function getPlaneteJoueur($pdo, $idJoueur, $idUnivers) {
     // récupération des galaxie de l'univers actuel 
