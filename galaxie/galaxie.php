@@ -35,7 +35,6 @@ $planeteJoueur = getPlaneteJoueur($pdo, $_SESSION['idJoueur'], $idUnivers);
 
 // Récupération information flotte 
 $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
-
 //var_dump($planeteJoueur);
 ?>
 
@@ -177,6 +176,36 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
             </tbody>
         </table>
     </div>
+    <div name="planeteJoeur">
+        <h2>Planetes du joueur :</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Planète</th>
+                    <th>Système Solaire</th>
+                    <th>Galaxie</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($planeteJoueur as $planete) {
+                    $nomPlanete = $planete['nom'];
+                    $nomSystemeSolaire = $planete['nomSystemeSolaire'];
+                    $nomGalaxie = $planete['nomGalaxie'];
+                ?>
+
+                    <tr>
+                        <td><?php echo $nomPlanete; ?></td>
+                        <td><?php echo $nomSystemeSolaire; ?></td>
+                        <td><?php echo $nomGalaxie; ?></td>
+                    </tr>
+
+                <?php } ?>
+
+            </tbody>
+        </table>
+
+    </div>
     <form method="post" action="./../deconection.php">
         <button type="submit">Déconnexion</button>
     </form>
@@ -211,7 +240,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                 });
             }
         }
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             initDialogButtons();
             initCloseButtons();

@@ -30,7 +30,7 @@ if(isset($_POST['create_universe'])) {
 
             // Création des 10 systèmes solaires de la galaxie
             for ($j = 1; $j <= 10; $j++) {
-                $systemeNom = "Système solaire ".$j." de la Galaxie ".$i;  // Nom du système solaire 
+                $systemeNom = "Système solaire ".$j;  // Nom du système solaire 
                 $systemeNumero = $j;   
                 $pdo->exec('INSERT INTO systeme_solaire (idGalaxie, nom, numero) VALUES ('.$galaxyId.', "'.$systemeNom.'", '.$systemeNumero.')');
                 $systemId = $pdo->lastInsertId();

@@ -57,7 +57,7 @@ function getTypePlanete($pdo, $typeId) {
 }
 
 
-function getPlaneteJoueur($pdo, $idJoueur, $idUnivers) {
+function getPlaneteJoueurAtaque($pdo, $idJoueur, $idUnivers) {
     // récupération des galaxie de l'univers actuel 
     $stmt = $pdo->prepare('SELECT * FROM galaxie WHERE idUnivers = :idUnivers');
     $stmt->execute(['idUnivers' => $idUnivers]);
@@ -78,5 +78,19 @@ function getPlaneteJoueur($pdo, $idJoueur, $idUnivers) {
     }
     return $planetes;
 }
+
+
+// Afin de référencer les planetes du joueur dans la page galaxie.php on liste les planetes du joueur
+function getPlaneteJoueur($pdo, $idJoueur, $idUnivers) {
+    $stmt = $pdo->prepare('SELECT p.*, ss.nom AS nomSystemeSolaire, g.nom AS nomGalaxie
+                           FROM planete p
+                           INNER JOIN systeme_solaire ss ON p.idSystemeSolaire = ss.id
+                           INNER JOIN galaxie g ON ss.idGalaxie = g.id
+                           WHERE p.idJoueur = :idJoueur');
+    $stmt->execute(['idJoueur' => $idJoueur]);
+    $planetes = $stmt->fetchAll();
+    return $planetes;
+}
+
 
 ?>
