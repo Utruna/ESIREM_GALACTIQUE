@@ -1,4 +1,4 @@
-/*Placement de la vidéo en fond d'écran pour qu'elle prenne toute la place visuelle*/
+/*Affichage en plein écran de l'arrière plan concerné par le fichier*/
 .arriere_plan {
     position: fixed;
     right: 0;
@@ -11,22 +11,27 @@
     background-size: cover;
 }
 
+/* Style des éléments */
 .objet {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
+/*Définition de la taille des images/icôles que l'on va utiliser*/
 .objet img {
     width: 15%;
     margin-right: 10px;
 }
 
+/*Changement de couleur du texte*/
 .objet h2 {
+    color: white;
     margin: 0;
 }
 
 .objet h3 {
+    color: white;
     margin-top: 5px;
 }
 
@@ -39,10 +44,6 @@
     color: white;
 }
 
-h2, h3{
-    color: white;
-}
-
 /* Positionnement des éléments */
 body {
     display: flex;
@@ -51,6 +52,7 @@ body {
     margin: 0;
 }
 
+/*Positionnement des informations ressources en haut à droite de l'écran de façon statique*/
 #div_ressources {
     position: fixed;
     top: 20px;
@@ -61,12 +63,14 @@ body {
     color:white;
 }
 
+/*Positionnement du bouton retour en bas à gauche de l'écran de façon statique*/
 form#retour {
     position: fixed;
     bottom: 20px;
     left: 20px;
 }
 
+/*Changement de couleur des boutons*/
 button[type="submit"] {
     background-color: #444e74d2;
     color: white;
