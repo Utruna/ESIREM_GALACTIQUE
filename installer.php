@@ -247,13 +247,6 @@ CREATE TABLE IF NOT EXISTS type_vaisseau (
 );
 ');echo "- Type Vaisseau créé </br>";
 
-  $pdo->exec('
-CREATE TABLE IF NOT EXISTS type_recherche (
-  id INT NOT NULL AUTO_INCREMENT,
-  nom VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
-);
-');echo "- Type Recherche créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS rapport_de_combat (
