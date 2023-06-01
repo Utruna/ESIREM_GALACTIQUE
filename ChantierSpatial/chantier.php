@@ -86,86 +86,95 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
 ?>
 
 <!DOCTYPE html>
-<header>
+<html>
+
+<head>
     <meta charset="utf-8" />
     <title>Chantier Spatial</title>
-    <link rel="stylesheet" href="../style/css_index.css" />
+    <link rel="stylesheet" href="../style/css_manager_objet.css" />
     <link rel="stylesheet" href="../style/alert.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</header>
+</head>
 
 <body>
-    <div>
-        <form action="./chasseur.php" method="post">
-            <img src="./../img/chasseur.png" style="width:5%" alt="">
+    <img src="../img/arriere_plan_chantier.jpg" class="arriere_plan">
+    <div class="objet">
+        <img src="./../img/chasseur.png" alt="">
+        <div>
             <h2>Chasseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_chasseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalChasseur ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieChasseur ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumChasseur ?></p>
-            <p class="resource">Temps de construction : 20 seconde</p>
             <p>Point d'attaque : 75</p>
             <p>Point de défense : 50</p>
+        </div>
+        <form action="./chasseur.php" method="post">
             <input type="text" name="chasseur" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
+            <button class="bouton" type="submit" name="boutonEnergie" data-delai="4">Construire (20 secondes)</button>
         </form>
     </div>
-    <div>
-        <form action="./croiseur.php" method="post">
-            <img src="./../img/croiseur.png" style="width:5%" alt="">
+    <div class="objet">
+        <img src="./../img/croiseur.png" alt="">
+        <div>
             <h2>Croiseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_croiseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalCroiseur ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieCroiseur ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumCroiseur ?></p>
-            <p class="resource">Temps de construction : 120 seconde</p>
             <p>Point d'attaque : 400</p>
             <p>Point de défense : 150</p>
+        </div>
+        <form action="./croiseur.php" method="post">
             <input type="text" name="croiseur" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
+            <button class="bouton" type="submit" name="boutonEnergie" data-delai="4">Construire (120 secondes)</button>
         </form>
     </div>
-    <div>
-        <form action="./transporteur.php" method="post">
-            <img src="./../img/transporteur.png" style="width:5%" alt="">
+    <div class="objet">
+        <img src="./../img/transporteur.png" alt="">
+        <div>
             <h2>Transporteur</h2>
             <h3>Disponible : <?php echo $flotte['nb_transporteur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalTransporteur ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieTransporteur ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumTransporteur ?></p>
-            <p class="resource">Temps de construction : 55 seconde</p>
             <p>Point d'attaque : 50</p>
             <p>Point de défense : 100 000</p>
+        </div>
+        <form action="./transporteur.php" method="post">
             <input type="text" name="croiseur" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
+            <button class="bouton" type="submit" name="boutonEnergie" data-delai="4">Construire (55 secondes)</button>
         </form>
     </div>
-    <div>
-        <form action="./coloniseur.php" method="post">
-            <img src="./../img/coloniseur.png" style="width:5%" alt="">
+    <div class="objet">
+        <img src="./../img/coloniseur.png" alt="">
+        <div>
             <h2>Coloniseur</h2>
             <h3>Disponible : <?php echo $flotte['nb_coloniseur'] ?></h3>
             <p class="resource">Métal : <?php echo $coutMetalColo ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieColo ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumColo ?></p>
-            <p class="resource">Temps de construction : 55 seconde</p>
             <p>Point d'attaque : 50</p>
             <p>Point de défense : 100 000</p>
+        </div>
+        <form action="./coloniseur.php" method="post">
             <input type="text" name="croiseur" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonEnergie" data-delai="4">Construire</button>
+            <button class="bouton" type="submit" name="boutonEnergie" data-delai="4">Construire (55 secondes)</button>
         </form>
     </div>
-    <div>
+    <div id="div_ressources">
         <h2>Ressource Joueur</h2>
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
         <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
     </div>
-    <form method="post" action="./../galaxie/manager.php">
-        <button type="submit">Retour</button>
+    <form id="retour" method="post" action="./../galaxie/manager.php">
+        <button class="bouton" type="submit">Retour</button>
     </form>
 </body>
+
+</html>

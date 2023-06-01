@@ -1,0 +1,81 @@
+/*Placement de la vidéo en fond d'écran pour qu'elle prenne toute la place visuelle*/
+.arriere_plan {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100vh;
+    min-height: 100vh;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background-size: cover;
+}
+
+.objet {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.objet img {
+    width: 15%;
+    margin-right: 10px;
+}
+
+.objet h2 {
+    margin: 0;
+}
+
+.objet h3 {
+    margin-top: 5px;
+}
+
+.objet p.resource {
+    margin: 5px 0;
+}
+
+.objet p {
+    margin: 0;
+    color: white;
+}
+
+h2, h3{
+    color: white;
+}
+
+/* Positionnement des éléments */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+}
+
+#div_ressources {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f1f1f128;
+    padding: 10px;
+    border-radius: 5px;
+    color:white;
+}
+
+form#retour {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+button[type="submit"] {
+    background-color: #444e74d2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+.bouton:hover{
+    background-color: #444e74;
+}
