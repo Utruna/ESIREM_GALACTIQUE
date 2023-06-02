@@ -539,8 +539,9 @@ SELECT r1.id, r2.id
 FROM recherche r1, recherche r2
 WHERE r1.typeRecherche = 'laser' AND r1.niveau = 5
 AND r2.typeRecherche = 'ions' AND r2.niveau = 0;
-");
-  echo "- Contrainte recherche implémanteé </br>";
+  ");
+  echo "- Contrainte recherche implémentée </br>";
+  
 
   $pdo->exec("
 INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)

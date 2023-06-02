@@ -34,6 +34,14 @@ les principales difficulté rencontré :
     * mise en place du popup pour les attaque.
 - mise en place des recherche/construction de vaisseaux/infrastructures.
 - attribution et mise en places des table de manière dynamique pour une mielleur utilisation de l'espace de stockage notament a la 1ère connection d'un joueur.
+- AJOUT DE LA PRODUCTION !!! après MOULTE difficulté nous avons enfin réussi a implémenter la production de ressource :))))))
+    les grosse difficulté rencontré était surtout de l'ordre de la connaissance technique car je ne savais pas comment géré le temps
+    après réfléxion j'ai voulu stocker le temps dans une variable DATE mais je n'arrivais pas a etre plus précis que la journée.
+    j'ai donc décidé de mettre une variable DATATIME qui m'a permis d'etre précis a la minute mais les calcules ne voulais pas fonctionner
+    j'ai donc décidé de stocker le temps en seconde depuis 1970 avec la fonction time() de php.
+    de plus il fallais vérifier que les ressources était bien produite dans l'univers donc il a fallu réaliser une grosse requete sql qui était complexe a mettre en place.
+    cependant une fois le tout mis en place il ne restait le calcule des ressource prduite qui a été un enfert mais bon sa l'a fait :D
+    note de Colin : JE SUIS TROP FIERE !!!! :D :D :D :D :D :D :D :D :D :D :D :D :D :D :D
 
 les idée ajouter :
 - gestion des flotes séparé de l'attaque car cela ne nous semblais pas logique
@@ -41,13 +49,4 @@ les idée ajouter :
 - les tables relatives au planete et au joueur ne sont attribuer que en cas de besoin pour éviter une base de donnée exisivement lourde.
 
 les chose non fini :
-- la gestion des ressources et des construction dans le temps.
-    * idée de la mise en place qu'on aurais souhaiter effectuer =>
-        nous voulions ajouter une collone sur chaque table avec un horodatage pour pouvoir calculer le temps depuis la dernière mise a jour des tables
-        a chaque action effectuer par le joueur nous aurions mis a jour les tables en ajoutant le temps écoulé depuis la dernière mise a jour.
-        nous aurions ensuite calculer les ressources produite depuis la dernière mise a jour et les aurions ajouter au ressources du joueur.
-        nous aurions aussi pu calculer les construction effectuer depuis la dernière mise a jour et les aurions ajouter au construction en cours du joueur.
-        les difficulté que nous aurions rencontré sont que si une upgrade d'une infrastructure de production est effectuer nous aurions du recalculer les ressources 
-        produite depuis la dernière mise a jour en prenant en compte le temps de construction de l'upgrade.
-
 - mise en place des attaque qui a pauser énormément de souci.
