@@ -166,14 +166,14 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
             <button class="bouton" type="submit" name="boutonEnergie" data-delai="4">Construire (55 secondes)</button>
         </form>
     </div>
-    <div id="div_ressources">
+    <div class="div_ressources">
         <h2>Ressource Joueur</h2>
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
         <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
     </div>
-    <form id="retour" method="post" action="./../galaxie/manager.php">
-        <button class="bouton" type="submit">Retour</button>
+    <form method="post" action="./../galaxie/manager.php">
+        <button class="retour" type="submit">Retour</button>
     </form>
 </body>
 

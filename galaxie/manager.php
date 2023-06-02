@@ -92,7 +92,7 @@ $planete = $stmt->fetch(PDO::FETCH_ASSOC);
     <form method="post" action="./galaxie.php">
         <button class="retour" type="submit">Retour</button>
     </form>
-    <div id="div_ressources">
+    <div class="div_ressources">
         <h2>Ressource Joueur</h2>
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
