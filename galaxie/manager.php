@@ -99,5 +99,6 @@ $planete = $stmt->fetch(PDO::FETCH_ASSOC);
         <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
         <form method="post" action="./../univers/prod.php">
             <button class="bouton" type="submit">Produire</button>
+        </form>
     </div>
 </body>

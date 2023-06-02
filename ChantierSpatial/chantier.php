@@ -171,6 +171,9 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
         <p class="resource">Deutérium : <?php echo $ressource['deuterium'] ?></p>
+        <form method="post" action="./../univers/prod.php">
+            <button class="bouton" type="submit">Produire</button>
+        </form>
     </div>
     <form method="post" action="./../galaxie/manager.php">
         <button class="retour" type="submit">Retour</button>
