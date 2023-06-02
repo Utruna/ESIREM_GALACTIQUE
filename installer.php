@@ -533,43 +533,6 @@ INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmenta
   );
   echo "- Recherche implémanteé </br>";
 
-  $pdo->exec("
-INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-SELECT r1.id, r2.id
-FROM recherche r1, recherche r2
-WHERE r1.typeRecherche = 'laser' AND r1.niveau = 5
-AND r2.typeRecherche = 'ions' AND r2.niveau = 0;
-  ");
-  echo "- Contrainte recherche implémentée </br>";
-  
-
-  $pdo->exec("
-INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-SELECT r1.id, r2.id
-FROM recherche r1, recherche r2
-WHERE r1.typeRecherche = 'energie' AND r1.niveau = 5
-AND r2.typeRecherche = 'laser' AND r2.niveau = 0;
-");
-  echo "- Contrainte recherche energie & laser planete implémanteé </br>";
-
-  $pdo->exec("
-  INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-  SELECT r1.id, r2.id
-  FROM recherche r1, recherche r2
-  WHERE r1.typeRecherche = 'energie' AND r1.niveau = 8
-  AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
-");
-  echo "- Contrainte recherche energie &bouclier planete implémanteé </br>";
-
-  $pdo->exec("
-INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-SELECT r1.id, r2.id
-FROM recherche r1, recherche r2
-WHERE r1.typeRecherche = 'ions' AND r1.niveau = 2
-AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
-");
-  echo "- Contrainte recherche ions & boulier planete implémanteé </br>";
-
 
   $pdo->exec("
 INSERT INTO statue_flotte (statutFlotte, description)
