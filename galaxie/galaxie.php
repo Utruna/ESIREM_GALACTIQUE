@@ -107,7 +107,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                 <!-- <div>
                                     <form action="./aquerire_planete.php" method="post">
                                         <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                        <button type="submit">Aquerire</button>
+                                        <button type="submit">Aquerir</button>
                                     </form>
                                 </div> -->
 

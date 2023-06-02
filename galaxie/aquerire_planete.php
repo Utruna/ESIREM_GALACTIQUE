@@ -6,13 +6,12 @@ if (!isset($_SESSION)) {
 include 'functions.php';
 // Vérifier si l'ID de la planète a été envoyé
 
-if (isset($_POST['idPlanete'])){
+if (isset($_POST['idPlanete'])) {
     $idPlanete = $_POST['idPlanete'];
     $idPlanete = !empty($idPlanete) ? $idPlanete : 0;
-}
-else{
+} else {
     $_SESSION['bad_alert'] = "Erreur lors de l'aquisition de la planete !";
-    header ('Location: ./galaxie.php');
+    header('Location: ./galaxie.php');
 }
 
 if (isset($idPlanete)) {
@@ -21,7 +20,25 @@ if (isset($idPlanete)) {
     echo $idPlanete;
 
     // On crée une nouvelle table infrastructure pour la planete
-    $stmt = $pdo->prepare('INSERT INTO infrastructure (idPlanete, niveauLabo, niveauChantierSpatial, niveauUsineNanite, niveauUsineMetal, niveauCentraleSolaire, niveauCentraleFusion, niveauArtillerieLaser, niveauCannonIons, niveauBouclier, niveauTechEnergie, niveauTechLaser, niveauTechIons, niveauTechBouclier, niveauTechArmement) VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
+    $stmt = $pdo->prepare('INSERT INTO infrastructure 
+    (
+        idPlanete, 
+        niveauLabo, 
+        niveauChantierSpatial, 
+        niveauUsineNanite, 
+        niveauUsineMetal, 
+        niveauCentraleSolaire, 
+        niveauCentraleFusion, 
+        niveauArtillerieLaser, 
+        niveauCannonIons, 
+        niveauBouclier, 
+        niveauTechEnergie, 
+        niveauTechLaser, 
+        niveauTechIons, 
+        niveauTechBouclier, 
+        niveauTechArmement
+    ) 
+    VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
     $stmt->execute(['idPlanete' => $idPlanete]);
 
 

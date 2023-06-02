@@ -12,11 +12,11 @@ try {
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Création de la base de données
-  $pdo->exec('CREATE DATABASE IF NOT EXISTS `galactique3` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;');
+  $pdo->exec('CREATE DATABASE IF NOT EXISTS `galactique2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;');
   echo "Création Base de données </br>";
 
   // Utilisation de la base de données
-  $pdo->exec('USE `galactique3`;');
+  $pdo->exec('USE `galactique2`;');
   echo "Connexion à la BDD </br>";
   echo "</br>";
   echo "Début création tables </br>";
@@ -30,7 +30,8 @@ try {
       password VARCHAR(255) NOT NULL,
       PRIMARY KEY (id)
     );
-  ');echo "- Joueur créé </br>";
+  ');
+  echo "- Joueur créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS univers (
@@ -38,7 +39,8 @@ try {
     nom VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
   );
-');echo "- Univers créé </br>";
+');
+  echo "- Univers créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS galaxie (
@@ -49,7 +51,8 @@ try {
     PRIMARY KEY (id),
     FOREIGN KEY (idUnivers) REFERENCES univers(id)
   );
-');echo "- Galaxie créé </br>";
+');
+  echo "- Galaxie créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS systeme_solaire (
@@ -60,7 +63,8 @@ try {
     PRIMARY KEY (id),
     FOREIGN KEY (idGalaxie) REFERENCES galaxie(id)
   );
-');echo "- Système solaire créé </br>";
+');
+  echo "- Système solaire créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS planete (
@@ -75,7 +79,8 @@ try {
     FOREIGN KEY (idSystemeSolaire) REFERENCES systeme_solaire(id),
     FOREIGN KEY (idJoueur) REFERENCES joueur(id)
   );
-');echo "- Planete créé </br>";
+');
+  echo "- Planete créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS ressource (
@@ -83,13 +88,17 @@ try {
     idUnivers INT NOT NULL,
     idJoueur INT NOT NULL,
     stockMetal INT NOT NULL DEFAULT 0,
+    tempsMetal DATE,
     stockEnergie INT NOT NULL DEFAULT 0,
+    tempsEnergie DATE,
     stockDeuterium INT NOT NULL DEFAULT 0,
+    tempsDeuterium DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (idUnivers) REFERENCES univers(id),
     FOREIGN KEY (idJoueur) REFERENCES joueur(id)
   );
-');echo "- Ressource créé </br>";
+');
+  echo "- Ressource créé </br>";
 
   $pdo->exec('
   CREATE TABLE IF NOT EXISTS recherche (
@@ -98,7 +107,60 @@ try {
     niveau INT NOT NULL,
     PRIMARY KEY (id)
   );
-');echo "- Recherche créé </br>";
+');
+  echo "- Recherche créé </br>";
+
+
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS chantier_spatial (
+  id INT NOT NULL AUTO_INCREMENT,
+  niveau INT NOT NULL,
+  production INT NOT NULL,
+  PRIMARY KEY (id)
+);
+');
+  echo "- Chantier spatial créé </br>";
+
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS prod_deuterium (
+  id INT NOT NULL AUTO_INCREMENT,
+  niveau INT NOT NULL,
+  production INT NOT NULL,
+  PRIMARY KEY (id)
+);
+');
+  echo "- Prod Deuterium créé </br>";
+
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS prod_nanit (
+  id INT NOT NULL AUTO_INCREMENT,
+  niveau INT NOT NULL,
+  production INT NOT NULL,
+  PRIMARY KEY (id)
+);
+');
+  echo "- Prod Nanit créé </br>";
+
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS prod_metal (
+  id INT NOT NULL AUTO_INCREMENT,
+  niveau INT NOT NULL,
+  production INT NOT NULL,
+  PRIMARY KEY (id)
+);
+');
+  echo "- Prod Metal créé </br>";
+
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS prod_fusion (
+id INT NOT NULL AUTO_INCREMENT,
+niveau INT NOT NULL,
+production INT NOT NULL,
+PRIMARY KEY (id)
+);
+');
+  echo "- Prod Fusion créé </br>";
+
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS statue_flotte (
@@ -107,7 +169,8 @@ CREATE TABLE IF NOT EXISTS statue_flotte (
   description TEXT,
   PRIMARY KEY (id)
 );
-');echo "- Statu flotte créé </br>";
+');
+  echo "- Statu flotte créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS flotte (
@@ -122,7 +185,8 @@ CREATE TABLE IF NOT EXISTS flotte (
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete),
   FOREIGN KEY (idStatFlotte) REFERENCES statue_flotte(idStatFlotte)
 );
-');echo "- Flotte créé </br>";
+');
+  echo "- Flotte créé </br>";
   //numeroFlotte INT NOT NULL, optionelle si on veut pouvoir nommer les flottes
 
   $pdo->exec('
@@ -132,7 +196,8 @@ CREATE TABLE IF NOT EXISTS vaisseau (
   flotte INT NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Vaisseau créé </br>";
+');
+  echo "- Vaisseau créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS cout (
@@ -144,7 +209,8 @@ CREATE TABLE IF NOT EXISTS cout (
   augmentationParNiveau INT NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Cout créé </br>";
+');
+  echo "- Cout créé </br>";
 
 
   $pdo->exec('
@@ -153,7 +219,8 @@ CREATE TABLE IF NOT EXISTS statu_fil (
   étatStatu VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Statu fil créé </br>";
+');
+  echo "- Statu fil créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS fil_de_recherche (
@@ -167,7 +234,8 @@ CREATE TABLE IF NOT EXISTS fil_de_recherche (
   FOREIGN KEY (idStatu) REFERENCES statu_fil(idStatFil),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
-');echo "- Fil de Recherche créé </br>";
+');
+  echo "- Fil de Recherche créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS fil_de_construction_infrastructure (
@@ -182,7 +250,8 @@ CREATE TABLE IF NOT EXISTS fil_de_construction_infrastructure (
   FOREIGN KEY (idStatu) REFERENCES statu_fil(idStatFil),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
-');echo "- File de Construction infrastructure créé </br>";
+');
+  echo "- File de Construction infrastructure créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS fil_de_construction_vaisseau (
@@ -196,7 +265,8 @@ CREATE TABLE IF NOT EXISTS fil_de_construction_vaisseau (
   FOREIGN KEY (idStatu) REFERENCES statu_fil(idStatFil),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
-');echo "- Fil de Construction Vaisseau créé </br>";
+');
+  echo "- Fil de Construction Vaisseau créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS defense (
@@ -205,7 +275,8 @@ CREATE TABLE IF NOT EXISTS defense (
   niveau INT NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Defense créé </br>";
+');
+  echo "- Defense créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS type_planete (
@@ -213,7 +284,8 @@ CREATE TABLE IF NOT EXISTS type_planete (
   nom VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Type Planete créé </br>";
+');
+  echo "- Type Planete créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS parametre_planete (
@@ -225,7 +297,8 @@ CREATE TABLE IF NOT EXISTS parametre_planete (
   bonusAquatique INT NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Parametre planete créé </br>";
+');
+  echo "- Parametre planete créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS joueur_univers (
@@ -237,7 +310,8 @@ CREATE TABLE IF NOT EXISTS joueur_univers (
   FOREIGN KEY (idJoueur) REFERENCES joueur(idJoueur),
   FOREIGN KEY (idUnivers) REFERENCES univers(idUnivers)
 );
-');echo "- Joueur univers créé </br>";
+');
+  echo "- Joueur univers créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS type_vaisseau (
@@ -245,7 +319,8 @@ CREATE TABLE IF NOT EXISTS type_vaisseau (
   nom VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
-');echo "- Type Vaisseau créé </br>";
+');
+  echo "- Type Vaisseau créé </br>";
 
 
   $pdo->exec('
@@ -263,7 +338,8 @@ CREATE TABLE IF NOT EXISTS rapport_de_combat (
   FOREIGN KEY (idFlotteDEF_Fin) REFERENCES flotte(idFlotte),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
-');echo "- Rapport de combat créé </br>";
+');
+  echo "- Rapport de combat créé </br>";
 
   $pdo->exec('
 CREATE TABLE IF NOT EXISTS infrastructure (
@@ -287,15 +363,60 @@ CREATE TABLE IF NOT EXISTS infrastructure (
   PRIMARY KEY (id),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
-');echo "- Infrastructure créé </br>";
+');
+  echo "- Infrastructure créé </br>";
 
 
-    echo "</br></br>";
+  echo "</br></br>";
 
-    echo "- Initialisation table </br>";
+  echo "- Initialisation table </br>";
 
   $pdo->exec('INSERT INTO type_planete (nom) VALUES ("banale"), ("aquatique"), ("tellurique")');
   echo "- Type planete implémanteé </br>";
+
+  $pdo->exec('
+  CREATE TABLE IF NOT EXISTS artillerie_laser (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    niveau INT NOT NULL,
+    cout_solaire INT NOT NULL,
+    cout_metal INT NOT NULL,
+    cout_eau INT NOT NULL,
+    contrainte_type_de_recherche INT NOT NULL,
+    contrainte_niveau_de_recherche INT NOT NULL,
+    PRIMARY KEY (id)
+  );
+  ');
+  echo "- Artilleri laser créé </br>";
+
+  $pdo->exec('
+  CREATE TABLE IF NOT EXISTS cannon_ions (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    niveau INT NOT NULL,
+    cout_solaire INT NOT NULL,
+    cout_metal INT NOT NULL,
+    cout_eau INT NOT NULL,
+    contrainte_type_de_recherche INT NOT NULL,
+    contrainte_niveau_de_recherche INT NOT NULL,
+    PRIMARY KEY (id)
+  );
+  ');
+  echo "- Cannon ions créé </br>";
+
+  $pdo->exec('
+  CREATE TABLE IF NOT EXISTS bouclier (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    niveau INT NOT NULL,
+    cout_solaire INT NOT NULL,
+    cout_metal INT NOT NULL,
+    cout_eau INT NOT NULL,
+    contrainte_type_de_recherche INT NOT NULL,
+    contrainte_niveau_de_recherche INT NOT NULL,
+    PRIMARY KEY (id)
+  );
+  ');
+  echo "- Bouclier créé </br>";
+
+
 
   $pdo->exec("
 INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmentationParNiveau) VALUES
@@ -318,14 +439,16 @@ INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmenta
   ('artillerie_laser', 1500, 0, 300, 0),
   ('cannon_a_ions', 5000, 0, 1000, 0),
   ('bouclier', 1000, 1000, 5000, 0);
-");echo "- Cout implémanteé </br>";
+");
+  echo "- Cout implémanteé </br>";
 
   $pdo->exec('INSERT INTO type_vaisseau(nom) VALUES 
                         ("Chasseur"),
                         ("Croiseur"),
                         ("Transporteur"),
                         ("Coloniseur")
-                        ;');echo "- Type vaisseau implémanteé </br>";
+                        ;');
+  echo "- Type vaisseau implémanteé </br>";
 
   $pdo->exec(
     "
@@ -385,39 +508,44 @@ INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmenta
     ('armement', 9),
     ('armement', 10);
     "
-  );echo "- Recherche implémanteé </br>";
+  );
+  echo "- Recherche implémanteé </br>";
 
-//   $pdo->exec("
-// INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-// SELECT r1.id, r2.id
-// FROM recherche r1, recherche r2
-// WHERE r1.typeRecherche = 'laser' AND r1.niveau = 5
-// AND r2.typeRecherche = 'ions' AND r2.niveau = 0;
-// ");echo "- Contrainte recherche implémanteé </br>";
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'laser' AND r1.niveau = 5
+AND r2.typeRecherche = 'ions' AND r2.niveau = 0;
+");
+  echo "- Contrainte recherche implémanteé </br>";
 
-//   $pdo->exec("
-// INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-// SELECT r1.id, r2.id
-// FROM recherche r1, recherche r2
-// WHERE r1.typeRecherche = 'energie' AND r1.niveau = 5
-// AND r2.typeRecherche = 'laser' AND r2.niveau = 0;
-// ");echo "- Contrainte recherche energie & laser planete implémanteé </br>";
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'energie' AND r1.niveau = 5
+AND r2.typeRecherche = 'laser' AND r2.niveau = 0;
+");
+  echo "- Contrainte recherche energie & laser planete implémanteé </br>";
 
-//   $pdo->exec("
-//   INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-//   SELECT r1.id, r2.id
-//   FROM recherche r1, recherche r2
-//   WHERE r1.typeRecherche = 'energie' AND r1.niveau = 8
-//   AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
-// ");echo "- Contrainte recherche energie &bouclier planete implémanteé </br>";
+  $pdo->exec("
+  INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+  SELECT r1.id, r2.id
+  FROM recherche r1, recherche r2
+  WHERE r1.typeRecherche = 'energie' AND r1.niveau = 8
+  AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
+");
+  echo "- Contrainte recherche energie &bouclier planete implémanteé </br>";
 
-//   $pdo->exec("
-// INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
-// SELECT r1.id, r2.id
-// FROM recherche r1, recherche r2
-// WHERE r1.typeRecherche = 'ions' AND r1.niveau = 2
-// AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
-// ");echo "- Contrainte recherche ions & boulier planete implémanteé </br>";
+  $pdo->exec("
+INSERT INTO contrainte_recherche (idRecherche, idRechercheSouhaiter)
+SELECT r1.id, r2.id
+FROM recherche r1, recherche r2
+WHERE r1.typeRecherche = 'ions' AND r1.niveau = 2
+AND r2.typeRecherche = 'bouclier' AND r2.niveau = 0;
+");
+  echo "- Contrainte recherche ions & boulier planete implémanteé </br>";
 
 
   $pdo->exec("
@@ -426,14 +554,15 @@ VALUES
   ('Attend', 'Flotte en attente'),
   ('Attaque', 'Flotte en phase d\'attaque'),
   ('Détruite', 'Flotte détruite');
-");echo "- Statue flotte implémanteé </br>";
+");
+  echo "- Statue flotte implémanteé </br>";
 
 
 
 
-$_SESSION['good_alert'] = "La base de donnée a été initialisé avec succès";
-header('Location: ./acceuille/index.php');
-exit;
+  $_SESSION['good_alert'] = "La base de donnée a été initialisé avec succès";
+  header('Location: ./acceuille/index.php');
+  exit;
 } catch (PDOException $e) {
   echo 'Connexion échouée : ' . $e->getMessage();
   var_dump($e->getMessage());

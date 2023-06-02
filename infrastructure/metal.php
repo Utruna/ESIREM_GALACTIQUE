@@ -3,6 +3,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+include './../univers/prod.php';
+
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
 $idPlanete = $_SESSION['idPlanete'];
@@ -55,6 +57,9 @@ function updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteriu
     $Energie = $stockEnergie - $coutEnergie;
     $Deuterium = $stockDeuterium - $coutDeuterium;
     // var_dump($Metal, $Energie, $Deuterium);
+
+    prod($pdo, $idJoueur, $idUnivers);
+
     // Mise à jour des ressources du joueur;
     $query = "UPDATE ressource SET stockMetal = :restMetal, stockEnergie = :restEnergie, stockDeuterium = :restDeuterium WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";
     $stmt = $pdo->prepare($query);
@@ -65,7 +70,6 @@ function updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteriu
     $stmt->bindValue(':idUnivers', $idUnivers);
     $stmt->execute();
 }
-
 
 
 function upgradeMineMetal($idJoueur, $idPlanete){

@@ -1,0 +1,56 @@
+=================== CONNECTION ===================
+création du compte :
+envoie vers la page de création de compte 
+POST : nom + mail + mdp
+
+connexion :
+envoie vers la page de connexion
+POST : mail + mdp
+
+- dans connection :
+    si nouveau joueur :
+        création des tables associé au joueur + table de la planete donner par le serveur + ressources de départ
+
+création univers :
+POST : nom univers
+
+=================== PAGE GALAXIE ===================
+L'appel des fonction nécessite toujours le PDO en 1er paramètre
+- récupération nom univers => idUnivers
+- récupération des galaxie => idUnivers
+- récupération des système solaire => idGalaxie
+- affichage des planètes => idSystème solaire
+- pseudo du joueur => idJoueur
+- type planete => idPlanete
+- selection des planete que le joueur peut attaquer => idJoueur et idUnivers
+- liste des planete du joueur => idJoueur et idUnivers
+
+=================== PAGE MANAGER ===================
+- récupération des resource du joueur => idJoueur
+- récupération nom de la planete => idPlanete
+
+
+=================== PAGE RECHERCHE/INFRASTRUCTURE/CHANTIER/DEFENSE ===================
+- récupération des resource du joueur => idJoueur
+- check des ressources restante au joueur en cas d'achat => pdo, idJoueur, coutMetal, coutEnergie, coutDeuterium
+- update des ressources après achat => pdo, idJoueur, coutMetal, coutEnergie, coutDeuterium
+- upgrade des batiments => pdo, idJoueur, idPlanete
+
+=================== INSTALLER ===================
+ne nécessite aucun input de l'utilisateur
+
+=================== PAGE CREATION UNIVERS ===================
+nécessite un post de l'utilisateur pour le nom de l'univers
+
+=================== ALERTE ===================
+- récupération des alertes => mise en session avec le tag "good_alert" ou "bad_alert" du message afficher dans la prochaine page visité incluant le fichier alert.php
+
+
+
+
+
+
+
+
+
+
