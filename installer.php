@@ -152,6 +152,16 @@ CREATE TABLE IF NOT EXISTS prod_metal (
   echo "- Prod Metal créé </br>";
 
   $pdo->exec('
+CREATE TABLE IF NOT EXISTS prod_solaire (
+  id INT NOT NULL AUTO_INCREMENT,
+  niveau INT NOT NULL,
+  production INT NOT NULL,
+  PRIMARY KEY (id)
+);
+');
+  echo "- Prod Solaire créé </br>";
+
+  $pdo->exec('
 CREATE TABLE IF NOT EXISTS prod_fusion (
 id INT NOT NULL AUTO_INCREMENT,
 niveau INT NOT NULL,
@@ -234,6 +244,7 @@ CREATE TABLE IF NOT EXISTS fil_de_recherche (
   FOREIGN KEY (idStatu) REFERENCES statu_fil(idStatFil),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
+  
 ');
   echo "- Fil de Recherche créé </br>";
 
@@ -265,6 +276,7 @@ CREATE TABLE IF NOT EXISTS fil_de_construction_vaisseau (
   FOREIGN KEY (idStatu) REFERENCES statu_fil(idStatFil),
   FOREIGN KEY (idPlanete) REFERENCES planete(idPlanete)
 );
+  
 ');
   echo "- Fil de Construction Vaisseau créé </br>";
 
@@ -416,7 +428,17 @@ CREATE TABLE IF NOT EXISTS infrastructure (
   ');
   echo "- Bouclier créé </br>";
 
-
+  $pdo->exec('
+CREATE TABLE IF NOT EXISTS production (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  temps DOUBLE,
+  idRessource INT NOT NULL,
+  idJoueur INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idRessource) REFERENCES ressource(id),
+  FOREIGN KEY (idJoueur) REFERENCES joueur(id)
+);
+  ');
 
   $pdo->exec("
 INSERT INTO cout (structureType, coutMetal, coutEnergie, coutDeuterium, augmentationParNiveau) VALUES
@@ -557,7 +579,73 @@ VALUES
 ");
   echo "- Statue flotte implémanteé </br>";
 
+  $pdo->exec("
+INSERT INTO prod_deuterium (niveau, production)
+VALUES
+  (0,0),
+  (1,1),
+  (2,1),
+  (3,2),
+  (4,2),
+  (5,3),
+  (6,4),
+  (7,5),
+  (8,6),
+  (9,8),
+  (10,10);
+");
+  echo "- Prod deuterium implémanteé </br>";
 
+  $pdo->exec("
+INSERT INTO prod_fusion (niveau, production)
+VALUES
+  (0,0),
+  (1,50),
+  (2,100),
+  (3,200),
+  (4,400),
+  (5,800),
+  (6,1600),
+  (7,3200),
+  (8,6400),
+  (9,12800),
+  (10,25600);
+");
+  echo "- Prod fusion implémanteé </br>";
+
+  $pdo->exec("
+INSERT INTO prod_solaire (niveau, production)
+VALUES
+  (0,0),
+  (1,20),
+  (2,28),
+  (3,39),
+  (4,55),
+  (5,77),
+  (6,108),
+  (7,151),
+  (8,211),
+  (9,296),
+  (10,414);
+");
+  echo "- Prod solaire implémanteé </br>";
+
+  $pdo->exec("
+INSERT INTO prod_metal (niveau, production)
+VALUES
+  (0,0),
+  (1,3),
+  (2,5),
+  (3,7),
+  (4,10),
+  (5,15),
+  (6,23),
+  (7,34),
+  (8,51),
+  (9,77),
+  (10,115);
+");
+  echo "- Prod metal implémanteé </br>";
 
 
   $_SESSION['good_alert'] = "La base de donnée a été initialisé avec succès";

@@ -56,8 +56,21 @@ function ifFirstConnexion($idPlayer, $idUnivers){
 }
 
 function firstConnexion($idPlayer, $idUnivers)
-{
+{	
+try{
 	$pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
+	$nomPlanete = attributionPlanete($pdo, $idUnivers, $idPlayer);
+	tableRessourceJoueur($pdo, $idUnivers, $idPlayer);
+	ajoutJoueurALaListeDesJoueurDeLUnivers($pdo, $idUnivers, $idPlayer);
+
+	$_SESSION['good_alert'] = 'on t\'a trouvé une planète ! c\'est la planete ' . $nomPlanete . ' !';
+}
+catch (Exception $e){
+	$_SESSION['bad_alert'] = 'Erreur lors de la 1ère connection';
+}
+}
+function attributionPlanete($pdo, $idUnivers, $idPlayer){
+	
 	var_dump($idUnivers);
 
 	//Je récupère toutes les planètes existante dans cette univers qui n'appartiennent à personne
@@ -78,46 +91,60 @@ function firstConnexion($idPlayer, $idUnivers)
 	$rep = $pdo->prepare('UPDATE planete SET idJoueur = :idJoueur WHERE id = :idPlanete');
 	$rep->execute(['idPlanete' => $idPlanete, 'idJoueur' => $idPlayer]);
 
+	//Attribution d'une table infrastructure au joueur
+	$stmt = $pdo->prepare('INSERT INTO infrastructure 
+	(
+		idPlanete, 
+		niveauLabo, 
+		niveauChantierSpatial, 
+		niveauUsineNanite, 
+		niveauUsineMetal, 
+		niveauCentraleSolaire, 
+		niveauCentraleFusion, 
+		niveauArtillerieLaser, 
+		niveauCannonIons, 
+		niveauBouclier, 
+		niveauTechEnergie, 
+		niveauTechLaser, 
+		niveauTechIons, 
+		niveauTechBouclier, 
+		niveauTechArmement
+	) 
+	VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
+	$stmt->execute(['idPlanete' => $idPlanete]);
+
+	//Récupération nom de la planete attribuer pour l'alerte
+	$rep = $pdo->prepare('SELECT nom FROM planete WHERE id = :idPlanete');
+	$rep->execute(['idPlanete' => $idPlanete]);
+	$nomPlanete = $rep->fetch();
+	return $nomPlanete['nom'];
+}
+
+
+function tableRessourceJoueur($pdo, $idUnivers, $idPlayer){
 	//Attribution d'une table ressources au joueur
 	$query = "INSERT INTO ressource (idUnivers, idJoueur, stockMetal, stockEnergie, stockDeuterium) VALUES (:idUnivers, :idJoueur, 30000, 6500, 6000)";
 	$stmt = $pdo->prepare($query);
 	$stmt->bindValue(':idUnivers', $idUnivers);
 	$stmt->bindValue(':idJoueur', $idPlayer);
 	$stmt->execute();
+}
 
-	//Attribution d'une table infrastructure au joueur
-    $stmt = $pdo->prepare('INSERT INTO infrastructure 
-    (
-        idPlanete, 
-        niveauLabo, 
-        niveauChantierSpatial, 
-        niveauUsineNanite, 
-        niveauUsineMetal, 
-        niveauCentraleSolaire, 
-        niveauCentraleFusion, 
-        niveauArtillerieLaser, 
-        niveauCannonIons, 
-        niveauBouclier, 
-        niveauTechEnergie, 
-        niveauTechLaser, 
-        niveauTechIons, 
-        niveauTechBouclier, 
-        niveauTechArmement
-    ) 
-    VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
-    $stmt->execute(['idPlanete' => $idPlanete]);
-
-	//Récupération nom de la planete attribuer pour l'alerte
-	$rep = $pdo->prepare('SELECT nom FROM planete WHERE id = :idPlanete');
-	$rep->execute(['idPlanete' => $idPlanete]);
-	$nomPlanete = $rep->fetch();
-
+function ajoutJoueurALaListeDesJoueurDeLUnivers($pdo, $idUnivers, $idPlayer){
 	//Ajout du joueur dans la liste des joueur de l'univers
 	$query = "INSERT INTO joueur_univers (idUnivers, idJoueur) VALUES (:idUnivers, :idJoueur)";
 	$stmt = $pdo->prepare($query);
 	$stmt->bindValue(':idUnivers', $idUnivers);
 	$stmt->bindValue(':idJoueur', $idPlayer);
 	$stmt->execute();
-
-	$_SESSION['good_alert'] = 'on t\'a trouvé une planète ! c\'est la planete ' . $nomPlanete . ' !';
 }
+
+function initTemps($pdo, $idJoueur){
+	$maintenant = microtime(true);
+	$query = "INSERT INTO production (idJoueur, temps) VALUES (:idJoueur, :maintenant)";
+	$stmt = $pdo->prepare($query);
+	$stmt->bindValue(':idJoueur', $idJoueur);
+	$stmt->bindValue(':maintenant', $maintenant);
+	$stmt->execute();
+}
+?>

@@ -104,14 +104,14 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
 
                             <?php } else { ?>
                                 <!-- ================ AQUERIRE = TRICHE ================ -->
-                                <!-- <div>
+                                <div>
                                     <form action="./aquerire_planete.php" method="post">
                                         <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
                                         <button type="submit">Aquerir</button>
                                     </form>
-                                </div> -->
-
-                                <button class="attaquer-planete" data-planete-id="<?php echo $planete['id']; ?>">
+                                </div>
+                                <!-- ================ ATTAQUE NOT WORK ================ -->
+                                <!-- <button class="attaquer-planete" data-planete-id="<?php echo $planete['id']; ?>">
                                     Attaquer
                                 </button>
 
@@ -168,7 +168,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                             </table>
                                         </form>
                                     </div>
-                                </div>
+                                </div> -->
 
                             <?php } ?>
                     </tr>

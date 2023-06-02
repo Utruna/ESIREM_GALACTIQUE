@@ -38,6 +38,7 @@ les principales difficulté rencontré :
 les idée ajouter :
 - gestion des flotes séparé de l'attaque car cela ne nous semblais pas logique
 - liste des planetes du joueur sur la page galaxie car cela nous semblais plus logique et permet une meilleur navigation.
+- les tables relatives au planete et au joueur ne sont attribuer que en cas de besoin pour éviter une base de donnée exisivement lourde.
 
 les chose non fini :
 - la gestion des ressources et des construction dans le temps.
