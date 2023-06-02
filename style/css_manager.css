@@ -22,31 +22,47 @@ body{
 
 .objet_1, .objet_2, .objet_3, .objet_4 {
     display: inline-block;
-    margin-top: 10%;
+    margin-top: 5%;
     width: 20%;
     text-align: center;
     vertical-align: top;
+    margin-left: 2%;
 }
 
-.objet_1 img, .objet_2 img, .objet_3 img, .objet_4 img {
+.objet_3 img, .objet_4 img {
     width: 50%;
     height: auto;
 }
 
+.objet_1 img {
+    width: 88%;
+    height: auto;
+}
+.objet_2 img {
+    width: 75%;
+    height: auto;
+}
+
 /*Positionnement des informations ressources en haut à droite de l'écran de façon statique*/
-#div_ressources {
+.div_ressources {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: #f1f1f128;
+    background-color: #f1f1f19f;
     padding: 10px;
     border-radius: 5px;
-    color:white;
 }
+
+.div_ressources p, .div_ressources h2{
+    color: black;
+}
+
 
 /*Positionnement du bouton retour en bas à gauche de l'écran de façon statique*/
 .retour {
-    margin-top: 30vh;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
     background-color: #444e7491;
     color: white;
     padding: 14px 20px;
