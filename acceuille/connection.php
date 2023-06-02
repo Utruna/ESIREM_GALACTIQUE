@@ -140,7 +140,7 @@ function ajoutJoueurALaListeDesJoueurDeLUnivers($pdo, $idUnivers, $idPlayer){
 }
 
 function initTemps($pdo, $idJoueur){
-	$maintenant = microtime(true);
+	$maintenant = time();
 	$query = "INSERT INTO production (idJoueur, temps) VALUES (:idJoueur, :maintenant)";
 	$stmt = $pdo->prepare($query);
 	$stmt->bindValue(':idJoueur', $idJoueur);
