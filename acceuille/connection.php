@@ -62,7 +62,7 @@ try{
 	$nomPlanete = attributionPlanete($pdo, $idUnivers, $idPlayer);
 	tableRessourceJoueur($pdo, $idUnivers, $idPlayer);
 	ajoutJoueurALaListeDesJoueurDeLUnivers($pdo, $idUnivers, $idPlayer);
-
+	initTemps($pdo, $idPlayer);
 	$_SESSION['good_alert'] = 'on t\'a trouvé une planète ! c\'est la planete ' . $nomPlanete . ' !';
 }
 catch (Exception $e){
@@ -112,6 +112,11 @@ function attributionPlanete($pdo, $idUnivers, $idPlayer){
 	) 
 	VALUES (:idPlanete, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0)');
 	$stmt->execute(['idPlanete' => $idPlanete]);
+
+	//Attribution d'une table flotte a la planete
+	$stmt = $pdo->prepare('INSERT INTO flotte (idPlanete) VALUES (:idPlanete)');
+	$stmt->execute(['idPlanete' => $idPlanete]);
+
 
 	//Récupération nom de la planete attribuer pour l'alerte
 	$rep = $pdo->prepare('SELECT nom FROM planete WHERE id = :idPlanete');

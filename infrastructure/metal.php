@@ -3,7 +3,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-include './../univers/prod.php';
 
 $pdo = new PDO('mysql:host=localhost;dbname=galactique2', 'root', '');
 $idJoueur = $_SESSION['idJoueur'];
@@ -58,7 +57,6 @@ function updateRestante($pdo, $idJoueur, $coutMetal, $coutEnergie, $coutDeuteriu
     $Deuterium = $stockDeuterium - $coutDeuterium;
     // var_dump($Metal, $Energie, $Deuterium);
 
-    prod($pdo, $idJoueur, $idUnivers);
 
     // Mise à jour des ressources du joueur;
     $query = "UPDATE ressource SET stockMetal = :restMetal, stockEnergie = :restEnergie, stockDeuterium = :restDeuterium WHERE idJoueur = :idJoueur AND idUnivers = :idUnivers";

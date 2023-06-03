@@ -9,7 +9,7 @@ lors de la création du jeu nous avions penser a plus de table que celles prése
 notament la table des contraintes qui aurait permis de gérer les contraintes de construction et de recherche via la base de données.
 nous avions aussi prévue de faire une table par structure pour pouvoir gérer les productions que se soit en ressources ou en vaisseaux. mais nous n'avons pas réussi a implémenter cette table.
 
-certaines table ne sont pas utilsier car nous n'avons pas réussi a les implémenter dans le jeu.
+certaines table ne sont pas utilsier car je n'ai pas réussi a les implémenter dans le jeu.
 - table fil de construction (infrastrucutre et vaisseaux) qui devais permettre de crée une fille d'attente de construction pour les infrastrucutre et les vaisseaux.
 - table fil de recherche qui devais permettre de crée une fille d'attente de recherche.
 - table rapport de combat qui devais permettre de stocker les rapports de combat entre les joueurs.
@@ -34,7 +34,7 @@ les principales difficulté rencontré :
     * mise en place du popup pour les attaque.
 - mise en place des recherche/construction de vaisseaux/infrastructures.
 - attribution et mise en places des table de manière dynamique pour une mielleur utilisation de l'espace de stockage notament a la 1ère connection d'un joueur.
-- AJOUT DE LA PRODUCTION !!! après MOULTE difficulté nous avons enfin réussi a implémenter la production de ressource :))))))
+- AJOUT DE LA PRODUCTION !!! après MOULTE difficulté j'ai enfin réussi a implémenter la production de ressource :))))))
     les grosse difficulté rencontré était surtout de l'ordre de la connaissance technique car je ne savais pas comment géré le temps
     après réfléxion j'ai voulu stocker le temps dans une variable DATE mais je n'arrivais pas a etre plus précis que la journée.
     j'ai donc décidé de mettre une variable DATATIME qui m'a permis d'etre précis a la minute mais les calcules ne voulais pas fonctionner
@@ -44,8 +44,8 @@ les principales difficulté rencontré :
     note de Colin : JE SUIS TROP FIERE !!!! :D :D :D :D :D :D :D :D :D :D :D :D :D :D :D
 
 les idée ajouter :
-- gestion des flotes séparé de l'attaque car cela ne nous semblais pas logique
-- liste des planetes du joueur sur la page galaxie car cela nous semblais plus logique et permet une meilleur navigation.
+- gestion des flotes séparé de l'attaque car cela ne me semblais pas logique
+- liste des planetes du joueur sur la page galaxie car cela me semblais plus logique et permet une meilleur navigation.
 - les tables relatives au planete et au joueur ne sont attribuer que en cas de besoin pour éviter une base de donnée exisivement lourde.
 
 les chose non fini :

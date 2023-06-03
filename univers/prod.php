@@ -92,12 +92,10 @@ function calculeTemps($pdo, $idJoueur){
     $stmt->bindValue(':idJoueur', $idJoueur);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Extraction de la valeur de la colonne "temps"
     $temps = $result['temps'];
-
     // Calcul du temps écoulé en ms
     $dateActuelle = time();
+
     $tempsEcoule = $dateActuelle - $temps;
     var_dump($tempsEcoule);
     return $tempsEcoule;
