@@ -44,18 +44,19 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
 <head>
     <meta charset="utf-8" />
     <title>Page de gestion des planetes</title>
-    <!-- <link rel="stylesheet" href="../style/css_index.css" /> -->
+    <link rel="stylesheet" href="../style/css_galaxie.css" />
     <link rel="stylesheet" href="../style/popupGalaxie.css" />
 </head>
 
 <body>
+    <img src="../img/arriere_plan_galaxie.png" class="arriere_plan"/>
     <h2>Vous êtes dans l'univers <?php echo $univers['nom']; ?></h2>
     <h2>Sélectionner une galaxie et un système solaire</h2>
 
     <form method="get">
         <div>
             <label>Galaxie :</label>
-            <select name="galaxie" onchange="this.form.submit()">
+            <select class="select" name="galaxie" onchange="this.form.submit()">
                 <?php foreach ($galaxies as $galaxie) : // Affichage de chaque galaxie dans une liste
                 ?>
                     <option value="<?php echo $galaxie['id']; ?>" <?php if ($galaxieId == $galaxie['id'])
@@ -66,7 +67,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
 
         <div>
             <label>Système solaire :</label>
-            <select name="systeme-solaire" onchange="this.form.submit()">
+            <select class="select" name="systeme-solaire" onchange="this.form.submit()">
                 <?php foreach ($systemesSolaire as $systeme) : // Affichage de chaque système solaire dans une liste
                 ?>
                     <option value="<?php echo $systeme['id']; ?>" <?php if ($systemeSolaireId == $systeme['id']) echo 'selected'; ?>><?php echo $systeme['nom']; ?></option>
@@ -99,7 +100,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                             ?>
                                 <form action="./manager.php" method="post">
                                     <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                    <button type="submit">Manager</button>
+                                    <button class="bouton" type="submit">Manager</button>
                                 </form>
 
                             <?php } else { ?>
@@ -107,7 +108,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
                                 <div>
                                     <form action="./aquerire_planete.php" method="post">
                                         <input type="hidden" name="idPlanete" value="<?php echo $planete['id']; ?>">
-                                        <button type="submit">Aquerir</button>
+                                        <button class="bouton" type="submit">Aquerir</button>
                                     </form>
                                 </div>
                                 <!-- ================ ATTAQUE NOT WORK ================ -->
@@ -207,7 +208,7 @@ $flotte = getFlotte($pdo, $_SESSION['idJoueur']);
 
     </div>
     <form method="post" action="./../deconection.php">
-        <button type="submit">Déconnexion</button>
+        <button class="deconnexion" type="submit">Déconnexion</button>
     </form>
 
     <script>

@@ -1,0 +1,70 @@
+/*Affichage en plein écran de l'arrière plan concerné par le fichier*/
+.arriere_plan {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+    background-size: cover;
+}
+
+body{
+    color:rgb(255, 255, 255);
+    margin-left: 40%;
+}
+
+h1, h2{
+    color: white;
+}
+
+/*Style des boutons aquerir et manager*/
+.bouton {
+    background-color: #444e7491;
+    color: white;
+    padding: 7px 10px;
+    margin: 4px 0;
+    border: none;
+    width: auto;
+    cursor: pointer;
+}
+
+.bouton:hover{
+    background-color: #444e74;
+}
+
+
+/*Placement du bouton deconnexion en bas à gauche et style de ce dernier*/
+.deconnexion {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #444e7491;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    width: auto;
+    cursor: pointer;
+}
+
+.deconnexion:hover{
+    background-color: #444e74;
+}
+
+/*Style des menus déroulants pour sélectionner les galaxies et les systèmes solaires*/
+
+.select{
+    background-color: #444e7491;
+    color: white;
+    padding: 7px 10px;
+    margin: 4px 0;
+    border: none;
+    width: auto;
+    cursor: pointer;
+}
+
+.select:hover{
+    background-color: #444e74;
+}
