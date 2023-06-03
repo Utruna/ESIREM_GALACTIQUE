@@ -84,52 +84,59 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
 <head>
     <meta charset="utf-8" />
     <title>Système de défense</title>
-    <link rel="stylesheet" href="../style/css_index.css" />
+    <link rel="stylesheet" href="../style/css_defense.css" />
     <link rel="stylesheet" href="../style/alert.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div>
-        <form action="./labo.php" method="post">
+    <img src="../img/arriere_plan_defenses.png" class="arriere_plan" />
+    <div class="objet_1">
+        <img src="../img/symbole_artillerie_laser.png"/>
+        <div>
             <h2>Artilllerie laser</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauArtillerieLaser'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalLaser ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieLaser ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumLaser ?></p>
-            <p class="resource">Temps de construction : 10 seconde</p>
-            <input type="text" name="laser" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonLaser" data-delai="4">Construire</button>
-        </form>
+            <form action="./labo.php" method="post">
+                <input type="text" name="laser" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonLaser" data-delai="4">Construire (10 secondes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./ions.php" method="post">
+    <div class="objet_2">
+        <img src="../img/symbole_canon_a_ions.png"/>
+        <div>
             <h2>Canon a ions</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauCannonIons'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalIons ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieIons ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumIons ?></p>
-            <p class="resource">Temps de construction : 10 seconde</p>
-            <input type="text" name="laser" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonLaser" data-delai="4">Construire</button>
-        </form>
+            <form action="./ions.php" method="post">
+                <input type="text" name="laser" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonLaser" data-delai="4">Construire (10 secondes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./bouclier.php" method="post">
+    <div class="objet_3">
+        <img src="../img/symbole_bouclier_defense.png"/>
+        <div>
             <h2>Bouclier</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauBouclier'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalBouclier ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieBouclier ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumBouclier ?></p>
-            <p class="resource">Temps de construction : 60 seconde</p>
-            <input type="text" name="bouclier" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonBouclier" data-delai="4">Construire</button>
-        </form>
+            <form action="./bouclier.php" method="post">
+                <input type="text" name="bouclier" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonBouclier" data-delai="4">Construire (1 minute)</button>
+            </form>
+        </div>
     </div>
-    <div>
+    <div class="div_ressources">
         <h2>Ressource Joueur</h2>
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
@@ -139,7 +146,7 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
         </form>
     </div>
     <form method="post" action="./../galaxie/manager.php">
-        <button type="submit">Retour</button>
+        <button class="retour" type="submit">Retour</button>
     </form>
 </body>
 
