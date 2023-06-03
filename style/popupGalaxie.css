@@ -4,7 +4,7 @@
 }
 
 .dialog-overlay.open {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -17,9 +17,12 @@
 }
 
 
-
+div.dialog-box{
+    color:black;
+}
 .dialog-box {
     background-color: #fff;
+    color:black;
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

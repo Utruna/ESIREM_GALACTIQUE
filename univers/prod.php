@@ -27,7 +27,7 @@ function prod($pdo, $idJoueur, $idUnivers)
         echo "ajout ressource fait";
         miseAJourTemps($pdo, $idJoueur);
         echo "mise a jour temps fait";
-        $_SESSION['good_alert'] = "Vos ressources ont été produites, gain : " . $metal . " de métal, " . $energie . " d'énergie et " . $deuterium . " de deutérium";
+        $_SESSION['good_alert'] = "Vos ressources ont été récolté : " . $metal . " de métal, " . $energie . " d'énergie et " . $deuterium . " de deutérium";
         header('Location: ../galaxie/manager.php');
     } else {
         $attente = 60 - $deltaTemps;
