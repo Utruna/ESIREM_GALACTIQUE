@@ -55,7 +55,7 @@ body{
 /*Positionnement des informations ressources en haut à droite de l'écran de façon statique*/
 .div_ressources {
     position: fixed;
-    top: 20px;
+    top: 50px;
     right: 20px;
     background-color: #f1f1f19f;
     padding: 10px;

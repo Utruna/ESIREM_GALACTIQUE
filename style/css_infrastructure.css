@@ -1,55 +1,64 @@
+* {
+    margin: 0;
+}
+
+body{
+    height: 100vh;
+    /*width: 100vw;*/
+}
+
 /*Affichage en plein écran de l'arrière plan concerné par le fichier*/
 .arriere_plan {
     position: fixed;
     right: 0;
     bottom: 0;
-    min-width: 100vh;
+    min-width: 100vw;
     min-height: 100vh;
-    width: auto;
-    height: auto;
+    width: 100vw;
+    height: 100vh;
     z-index: -100;
     background-size: cover;
 }
 
-/* Style des éléments */
-.objet {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+/*Positionement des icônes en disposition 3 et 2*/
+.objet_1, .objet_2, .objet_3{
+    display: inline-block;
+    margin-top: 1%;
+    width: 33%;
+    text-align: center;
+    vertical-align: top;
 }
 
-/*Définition de la taille des images/icônes que l'on va utiliser*/
-.objet img {
+.objet_4, .objet_5, .objet_6{
+    display: inline-block;
+    margin-top: 10%;
+    margin-left: 13%;
     width: 15%;
-    margin-right: 10px;
+    text-align: center;
+    vertical-align: top;
 }
 
-/*Changement de couleur du texte*/
-.objet h2 {
-    color: white;
-    margin: 0;
+.objet_7{
+    display: inline-block;
+    margin-top: 5%;
+    margin-left: 25%;
+    width: 50%;
+    text-align: center;
+    vertical-align: top;
 }
 
-.objet h3 {
-    color: white;
-    margin-top: 5px;
+.objet_4 {
+    margin-top: 10%;
 }
 
-.objet p.resource {
-    margin: 5px 0;
+.objet_1 img, .objet_2 img, .objet_3 img, .objet_7 img {
+    width: 30%;
+    height: auto;
 }
 
-.objet p {
-    margin: 0;
-    color: white;
-}
-
-/* Positionnement des éléments */
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 0;
+.objet_4 img, .objet_5 img, .objet_6 img {
+    width: 50%;
+    height: auto;
 }
 
 /*Positionnement des informations ressources en haut à droite de l'écran de façon statique*/
@@ -96,4 +105,10 @@ body {
 
 .bouton:hover{
     background-color: #444e74;
+}
+
+/*Changement de couleur du texte*/
+h2, h3, p {
+    color: rgb(255, 255, 255);
+    margin: 0;
 }

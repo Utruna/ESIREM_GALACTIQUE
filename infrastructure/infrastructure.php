@@ -139,103 +139,118 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
 <head>
     <meta charset="utf-8" />
     <title>infrastructure</title>
-    <link rel="stylesheet" href="../style/css_index.css" />
+    <link rel="stylesheet" href="../style/css_infrastructure.css" />
     <link rel="stylesheet" href="../style/alert.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div>
-        <form action="./labo.php" method="post">
+    <img src="../img/arriere_plan_chantier.jpg" class="arriere_plan">
+    <div class="objet_1">
+        <img src="../img/symbole_laboratoire_de_recherche.png" />
+        <div>
             <h2>Laboratoire de recherche</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauLabo'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalLabo ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieLabo ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumLabo ?></p>
-            <p class="resource">Temps de construction : 50 seconde</p>
+        </div>
+        <form action="./labo.php" method="post">
             <input type="text" name="laboratoire" value="true" style="display: none">
             <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonLaboratoire" data-delai="4">Construire</button>
+            <button class="bouton" type="submit" name="boutonLaboratoire" data-delai="4">Construire (50 secondes)</button>
         </form>
     </div>
-    <div>
-        <form action="./chantier.php" method="post">
+    <div class="objet_2">
+        <img src="../img/symbole_chantier_spatial.png" />
+        <div>
             <h2>Chantier spatial</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauChantierSpatial'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalChantier ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieChantier ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumChantier ?></p>
-            <p class="resource">Temps de construction : 50 seconde</p>
-            <input type="text" name="chantier" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonchantier" data-delai="4">Construire</button>
-        </form>
+            <form action="./chantier.php" method="post">
+                <input type="text" name="chantier" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonchantier" data-delai="4">Construire (50 secondes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./nanite.php" method="post">
+    <div class="objet_3">
+        <img src="../img/symbole_usine_de_nanite.png" />
             <h2>Usine de nanite</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauUsineNanite'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalNanite ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieNanite ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumNanite ?></p>
-            <p class="resource">Temps de construction : 10 minute</p>
-            <input type="text" name="nanite" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonNanite" data-delai="4">Construire</button>
-        </form>
+            <form action="./nanite.php" method="post">
+                <input type="text" name="nanite" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonNanite" data-delai="4">Construire (10 minutes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./metal.php" method="post">
+    <div class="objet_4">
+        <img src="../img/symbole_mine_de_metal.png" />
+        <div>
             <h2>Mine de Metal</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauUsineMetal'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalMineMetal ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieMineMetal ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumMineMetal ?></p>
-            <p class="resource">Temps de construction : 10 seconde</p>
-            <input type="text" name="metal" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonMetal" data-delai="4">Construire</button>
-        </form>
+            <form action="./metal.php" method="post">
+                <input type="text" name="metal" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonMetal" data-delai="4">Construire (10 secondes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./deuterium.php" method="post">
+    <div class="objet_5">
+        <img src="../img/symbole_synthetiseur_de_deuterium.png" />
+        <div>
             <h2>Synthétiseur de deuterium</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauSynthetiseurDeut'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalSyntheDeut ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieSyntheDeut ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumSyntheDeut ?></p>
-            <p class="resource">Temps de construction : 25 seconde</p>
-            <input type="text" name="deuterium" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonDeuterium" data-delai="4">Construire</button>
-        </form>
+            <form action="./deuterium.php" method="post">
+                <input type="text" name="deuterium" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonDeuterium" data-delai="4">Construire (25 secondes)</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <form action="./solaire.php" method="post">
+    <div class="objet_6">
+        <img src="../img/symbole_centrale_solaire.png" />
+        <div>
             <h2>Centrale solaire</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauCentraleSolaire'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalCentraleSolaire ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieCentraleSolaire ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumCentraleSolaire ?></p>
-            <p class="resource">Temps de construction : 10 seconde</p>
-            <input type="text" name="solaire" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonSolaire" data-delai="4">Construire</button>
-        </form>
+            <form action="./solaire.php" method="post">
+                <input type="text" name="solaire" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonSolaire" data-delai="4">Construire (10 secondes)</button>
+            </form>
+        </div>
     </div>
-    <form action="./fusion.php" method="post">
+    <div class="objet_7">
+        <img src="../img/symbole_centrale_a_fusion.png" />
+        <div>
             <h2>Centrale a fusion</h2>
             <h3>Niveau actuel : <?php echo $infrastructure['niveauCentraleFusion'] ?>/10</h3>
             <p class="resource">Métal : <?php echo $coutMetalCentraleFusion ?></p>
             <p class="resource">Energie : <?php echo $coutEnergieCentraleFusion ?></p>
             <p class="resource">Deutérium : <?php echo $coutDeuteriumCentraleFusion ?></p>
-            <p class="resource">Temps de construction : 2 minute</p>
-            <input type="text" name="fusion" value="true" style="display: none">
-            <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
-            <button type="submit" name="boutonFusion" data-delai="4">Construire</button>
-        </form>
+            <form action="./fusion.php" method="post">
+                <input type="text" name="fusion" value="true" style="display: none">
+                <input type="text" name="idPlanete" value="<?php echo $idPlanete ?>" style="display: none">
+                <button class="bouton" type="submit" name="boutonFusion" data-delai="4">Construire (2 minutes)</button>
+            </form>
+        </div>
     </div>
-    <div>
+    <div class="div_ressources">
         <h2>Ressource Joueur</h2>
         <p class="resource">Métal : <?php echo $ressource['metal'] ?></p>
         <p class="resource">Energie : <?php echo $ressource['energie'] ?></p>
@@ -245,7 +260,7 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
         </form>
     </div>
     <form method="post" action="./../galaxie/manager.php">
-        <button type="submit">Retour</button>
+        <button class="retour" type="submit">Retour</button>
     </form>
 </body>
 </html>

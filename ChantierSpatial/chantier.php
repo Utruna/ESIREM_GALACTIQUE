@@ -91,7 +91,7 @@ $ressource['deuterium'] = !empty($ressource['stockDeuterium']) ? $ressource['sto
 <head>
     <meta charset="utf-8" />
     <title>Chantier Spatial</title>
-    <link rel="stylesheet" href="../style/css_manager_objet.css" />
+    <link rel="stylesheet" href="../style/css_chantier.css" />
     <link rel="stylesheet" href="../style/alert.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
