@@ -1,8 +1,16 @@
 
 # ESIREM_GALATIQUE
+
+Projet 3A WEB ESIREM : Liaud Colin & Lanclume Christian
+
+
+
 **************************************************************
 Avant Lancement du jeu : lancer l'installer a l'adresse http://localhost/ESIREM_GALATIQUE/installer.php
 **************************************************************
+
+
+
 
 
 lors de la création du jeu nous avions penser a plus de table que celles présentes acutuelement mais nous n'avons pas réussi a implémanteé certaines tables.
